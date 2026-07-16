@@ -14,12 +14,12 @@ function uah(usd) {
 }
 
 function fmtUAH(n) {
-  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн';
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн';
 }
 
 function priceHTML(p) {
-  let html = '<span class="price-now">' + fmtUAH(uah(p.priceUSD)) + '</span>';
-  if (p.compareUSD && p.compareUSD > p.priceUSD) {
+  let html = '<span class="price-now">' + fmtUAH(p.uah) + '</span>';
+  if (p.sale) {
     html += '<span class="price-old">' + fmtUAH(uah(p.compareUSD)) + '</span>';
   }
   return html;
@@ -50,6 +50,104 @@ function categoryOf(type, title) {
   return 'Інше';
 }
 
+/* ---------- Facets: subcategory, gender, color family ---------- */
+
+const SUB_RULES = [
+  ['Long Sleeve', 'Лонгсліви'],
+  ['Short Sleeve', 'Футболки'],
+  ['Sweatpants', 'Джогери та штани'],
+  ['Leggings', 'Легінси'],
+  ['Bralettes', 'Бра'],
+  ['Bras', 'Бра'],
+  ['Shorts', 'Шорти'],
+  ['Tanks', 'Майки'],
+  ['Tees', 'Футболки'],
+  ['Shirts', 'Сорочки'],
+  ['Bodysuits', 'Боді'],
+  ['Onesies', 'Комбінезони'],
+  ['Dresses', 'Сукні'],
+  ['Skirts', 'Спідниці'],
+  ['Pullovers', 'Світшоти'],
+  ['Hoodies', 'Худі'],
+  ['Sweaters', 'Светри'],
+  ['Cardigans', 'Кардигани'],
+  ['Jackets', 'Куртки'],
+  ['Vests', 'Жилети'],
+  ['Coats', 'Пальта'],
+  ['Pants', 'Штани'],
+  ['Sneakers', 'Кросівки'],
+  ['Mules', 'М’юли'],
+  ['Slides', 'Шльопанці'],
+  ['Shoes', 'Взуття'],
+  ['Socks', 'Шкарпетки'],
+  ['Hair', 'Пов’язки та волосся'],
+  ['Headband', 'Пов’язки та волосся'],
+  ['Hats', 'Шапки та кепки'],
+  ['Caps', 'Шапки та кепки'],
+  ['Beanies', 'Шапки та кепки'],
+  ['Gloves', 'Рукавиці'],
+  ['Scarves', 'Шарфи'],
+  ['Backpack', 'Рюкзаки'],
+  ['Duffle', 'Сумки'],
+  ['Tote', 'Сумки'],
+  ['Bags', 'Сумки'],
+  ['Mats', 'Мати'],
+  ['Equipment', 'Інвентар'],
+  ['Water', 'Пляшки'],
+  ['Skin', 'Догляд'],
+  ['Body', 'Догляд'],
+  ['Supplement', 'Вітаміни'],
+  ['Books', 'Книги'],
+  ['Underwear', 'Білизна'],
+];
+
+function subOf(type) {
+  const t = type || '';
+  for (let i = 0; i < SUB_RULES.length; i++) {
+    if (t.includes(SUB_RULES[i][0])) return SUB_RULES[i][1];
+  }
+  const seg = t.split(':').pop();
+  return seg || 'Інше';
+}
+
+function genderOf(type) {
+  const t = type || '';
+  if (t.startsWith('Men')) return 'Чоловіче';
+  if (t.startsWith('Women')) return 'Жіноче';
+  return 'Унісекс';
+}
+
+const COLOR_FAMILIES = [
+  ['Чорний', '#151515', /black|anthracite|charcoal|onyx/i],
+  ['Білий та айворі', '#F4F0E8', /white|ivory|bone|cream|frost|natural|vanilla/i],
+  ['Сірий', '#9A9A9A', /grey|gray|heather|gravel|steel|titanium|smoke|stone/i],
+  ['Бежевий та коричневий', '#A07850', /taupe|almond|espresso|mushroom|camel|chai|brown|tan|sand|oat|latte|khaki|cocoa|mocha|beige|butter|toffee|caramel|dune|bark/i],
+  ['Рожевий', '#E3A4BC', /pink|rose|blush|quartz|bubblegum|mauve|petal/i],
+  ['Червоний та бордо', '#A63040', /red|burgundy|bordeaux|cherry|wine|scarlet|crimson|berry/i],
+  ['Синій та блакитний', '#41618F', /blue|navy|azure|denim|indigo|provence|ocean|sky|cobalt/i],
+  ['Зелений', '#5E7A5E', /green|olive|emerald|spruce|sage|mint|ivy|lettuce|forest|moss|pine|jade/i],
+  ['Жовтий та помаранчевий', '#DFAF56', /yellow|gold|sunshine|candlelight|orange|peach|apricot|marigold|citrus|honey/i],
+  ['Фіолетовий', '#8E6FA8', /purple|lavender|lilac|plum|violet|orchid/i],
+];
+
+function colorFamilyOf(colors) {
+  const c = (colors && colors[0]) || '';
+  for (let i = 0; i < COLOR_FAMILIES.length; i++) {
+    if (COLOR_FAMILIES[i][2].test(c)) return COLOR_FAMILIES[i][0];
+  }
+  return c ? 'Інші кольори' : '';
+}
+
+const SIZE_ORDER = ['XXS', 'XS', 'XS/S', 'S', 'S/M', 'M', 'M/L', 'L', 'L/XL', 'XL', 'XXL', '1X', '2X', '3X', 'One Size', 'OS'];
+
+function sizeRank(s) {
+  const i = SIZE_ORDER.indexOf(s);
+  if (i !== -1) return i;
+  const num = parseFloat(s);
+  if (!isNaN(num)) return 100 + num;      // взуттєві розміри — після літерних
+  return 1000;                             // все інше — в кінець
+}
+
 /* ---------- Helpers ---------- */
 
 function esc(s) {
@@ -77,6 +175,26 @@ let query = '';
 let sortMode = 'default';
 let visibleCount = PAGE_SIZE;
 
+const facets = {
+  subs: new Set(),
+  sizes: new Set(),
+  colors: new Set(),
+  genders: new Set(),
+  priceMin: null,
+  priceMax: null,
+  sale: false,
+};
+
+function facetsActiveCount() {
+  return facets.subs.size + facets.sizes.size + facets.colors.size + facets.genders.size +
+    (facets.priceMin != null ? 1 : 0) + (facets.priceMax != null ? 1 : 0) + (facets.sale ? 1 : 0);
+}
+
+function clearFacets() {
+  facets.subs.clear(); facets.sizes.clear(); facets.colors.clear(); facets.genders.clear();
+  facets.priceMin = null; facets.priceMax = null; facets.sale = false;
+}
+
 /* ---------- DOM ---------- */
 
 const el = {
@@ -88,6 +206,14 @@ const el = {
   more: document.getElementById('more'),
   resultCount: document.getElementById('resultCount'),
   updatedAt: document.getElementById('updatedAt'),
+  filters: document.getElementById('filters'),
+  filterGroups: document.getElementById('filterGroups'),
+  filtersToggle: document.getElementById('filtersToggle'),
+  filtersClose: document.getElementById('filtersClose'),
+  filtersApply: document.getElementById('filtersApply'),
+  filtersReset: document.getElementById('filtersReset'),
+  filtersBackdrop: document.getElementById('filtersBackdrop'),
+  applied: document.getElementById('applied'),
   modal: document.getElementById('modal'),
   modalBackdrop: document.getElementById('modalBackdrop'),
   modalClose: document.getElementById('modalClose'),
@@ -123,33 +249,188 @@ function chipHTML(value, label, count) {
     esc(label) + '<span class="chip-count">' + count + '</span></button>';
 }
 
-/* ---------- Filtering / sorting / rendering ---------- */
+/* ---------- Filtering ---------- */
+
+// Base scope: category + search (facets applied on top of this)
+function inScope(p) {
+  if (activeCategory !== 'all' && p.category !== activeCategory) return false;
+  const q = query.trim().toLowerCase();
+  if (q && p.title.toLowerCase().indexOf(q) === -1 &&
+      p.type.toLowerCase().indexOf(q) === -1) return false;
+  return true;
+}
+
+// Does p pass every facet group except `skip`? (standard faceting:
+// OR inside a group, AND across groups)
+function passesFacets(p, skip) {
+  if (skip !== 'subs' && facets.subs.size && !facets.subs.has(p.sub)) return false;
+  if (skip !== 'genders' && facets.genders.size && !facets.genders.has(p.gender)) return false;
+  if (skip !== 'colors' && facets.colors.size && !facets.colors.has(p.colorFam)) return false;
+  if (skip !== 'sizes' && facets.sizes.size) {
+    let hit = false;
+    for (const s of p.sizes || []) { if (facets.sizes.has(s)) { hit = true; break; } }
+    if (!hit) return false;
+  }
+  if (skip !== 'price') {
+    if (facets.priceMin != null && p.uah < facets.priceMin) return false;
+    if (facets.priceMax != null && p.uah > facets.priceMax) return false;
+  }
+  if (skip !== 'sale' && facets.sale && !p.sale) return false;
+  return true;
+}
 
 function applyFilters() {
-  const q = query.trim().toLowerCase();
-  filtered = PRODUCTS.filter(function (p) {
-    if (activeCategory !== 'all' && p.category !== activeCategory) return false;
-    if (q && p.title.toLowerCase().indexOf(q) === -1 &&
-        p.type.toLowerCase().indexOf(q) === -1) return false;
-    return true;
-  });
+  filtered = PRODUCTS.filter(function (p) { return inScope(p) && passesFacets(p, null); });
   if (sortMode === 'asc') {
-    filtered.sort(function (a, b) { return a.priceUSD - b.priceUSD; });
+    filtered.sort(function (a, b) { return a.uah - b.uah; });
   } else if (sortMode === 'desc') {
-    filtered.sort(function (a, b) { return b.priceUSD - a.priceUSD; });
+    filtered.sort(function (a, b) { return b.uah - a.uah; });
+  } else if (sortMode === 'sale') {
+    filtered.sort(function (a, b) { return (b.sale ? 1 : 0) - (a.sale ? 1 : 0); });
   }
 }
+
+/* ---------- Filter panel ---------- */
+
+function countBy(skipGroup, valueOf, multi) {
+  const counts = {};
+  for (const p of PRODUCTS) {
+    if (!inScope(p) || !passesFacets(p, skipGroup)) continue;
+    if (multi) {
+      for (const v of valueOf(p) || []) counts[v] = (counts[v] || 0) + 1;
+    } else {
+      const v = valueOf(p);
+      if (v) counts[v] = (counts[v] || 0) + 1;
+    }
+  }
+  return counts;
+}
+
+function checkboxHTML(group, value, label, count, checked, dot) {
+  return '<label class="f-opt' + (count === 0 && !checked ? ' muted' : '') + '">' +
+    '<input type="checkbox" data-group="' + group + '" data-value="' + esc(value) + '"' +
+    (checked ? ' checked' : '') + '>' +
+    (dot ? '<span class="f-dot" style="background:' + dot + '"></span>' : '') +
+    '<span class="f-name">' + esc(label) + '</span>' +
+    '<span class="f-count">' + count + '</span></label>';
+}
+
+function groupHTML(title, inner) {
+  if (!inner) return '';
+  return '<details class="fgroup" open><summary>' + title + '</summary>' +
+    '<div class="fgroup-body">' + inner + '</div></details>';
+}
+
+function renderFilters() {
+  const parts = [];
+
+  // Тип (підкатегорія)
+  const subCounts = countBy('subs', function (p) { return p.sub; });
+  const subs = Object.keys(subCounts).sort(function (a, b) { return subCounts[b] - subCounts[a]; });
+  if (subs.length > 1 || facets.subs.size) {
+    parts.push(groupHTML('Тип', subs.map(function (s) {
+      return checkboxHTML('subs', s, s, subCounts[s] || 0, facets.subs.has(s));
+    }).join('')));
+  }
+
+  // Для кого (ховаємо всередині чисто жіночих/чоловічих категорій)
+  if (activeCategory !== 'Жіноче' && activeCategory !== 'Чоловіче') {
+    const gCounts = countBy('genders', function (p) { return p.gender; });
+    const genders = ['Жіноче', 'Чоловіче', 'Унісекс'].filter(function (g) { return gCounts[g] || facets.genders.has(g); });
+    if (genders.length > 1) {
+      parts.push(groupHTML('Для кого', genders.map(function (g) {
+        return checkboxHTML('genders', g, g, gCounts[g] || 0, facets.genders.has(g));
+      }).join('')));
+    }
+  }
+
+  // Розмір
+  const sCounts = countBy('sizes', function (p) { return p.sizes; }, true);
+  const sizes = Object.keys(sCounts).sort(function (a, b) { return sizeRank(a) - sizeRank(b) || a.localeCompare(b); });
+  if (sizes.length > 1) {
+    parts.push(groupHTML('Розмір', '<div class="f-sizes">' + sizes.map(function (s) {
+      return '<button class="f-size' + (facets.sizes.has(s) ? ' active' : '') +
+        '" data-group="sizes" data-value="' + esc(s) + '" title="' + sCounts[s] + '">' + esc(s) + '</button>';
+    }).join('') + '</div>'));
+  }
+
+  // Колір
+  const cCounts = countBy('colors', function (p) { return p.colorFam; });
+  const famOrder = COLOR_FAMILIES.map(function (f) { return f[0]; }).concat(['Інші кольори']);
+  const fams = famOrder.filter(function (f) { return cCounts[f] || facets.colors.has(f); });
+  if (fams.length > 1) {
+    parts.push(groupHTML('Колір', fams.map(function (f) {
+      const def = COLOR_FAMILIES.find(function (x) { return x[0] === f; });
+      return checkboxHTML('colors', f, f, cCounts[f] || 0, facets.colors.has(f), def ? def[1] : '#D8D2C8');
+    }).join('')));
+  }
+
+  // Ціна
+  parts.push(groupHTML('Ціна, грн',
+    '<div class="f-price">' +
+      '<input type="number" id="priceMin" inputmode="numeric" min="0" placeholder="від" value="' + (facets.priceMin != null ? facets.priceMin : '') + '">' +
+      '<span>—</span>' +
+      '<input type="number" id="priceMax" inputmode="numeric" min="0" placeholder="до" value="' + (facets.priceMax != null ? facets.priceMax : '') + '">' +
+    '</div>'));
+
+  // Знижка
+  const saleCounts = countBy('sale', function (p) { return p.sale ? 'y' : ''; });
+  if (saleCounts.y || facets.sale) {
+    parts.push(groupHTML('Знижка',
+      checkboxHTML('sale', 'y', 'Зі знижкою', saleCounts.y || 0, facets.sale)));
+  }
+
+  el.filterGroups.innerHTML = parts.join('');
+  el.filtersReset.hidden = facetsActiveCount() === 0;
+  updateFiltersToggle();
+}
+
+function updateFiltersToggle() {
+  const n = facetsActiveCount();
+  el.filtersToggle.textContent = 'Фільтри' + (n ? ' · ' + n : '');
+}
+
+function renderApplied() {
+  const chips = [];
+  function add(group, value, label) {
+    chips.push('<button class="applied-chip" data-group="' + group + '" data-value="' + esc(value) + '">' +
+      esc(label) + ' ×</button>');
+  }
+  facets.subs.forEach(function (v) { add('subs', v, v); });
+  facets.genders.forEach(function (v) { add('genders', v, v); });
+  facets.sizes.forEach(function (v) { add('sizes', v, 'Розмір ' + v); });
+  facets.colors.forEach(function (v) { add('colors', v, v); });
+  if (facets.priceMin != null) add('priceMin', '', 'від ' + fmtUAH(facets.priceMin));
+  if (facets.priceMax != null) add('priceMax', '', 'до ' + fmtUAH(facets.priceMax));
+  if (facets.sale) add('sale', 'y', 'Зі знижкою');
+  if (chips.length) {
+    chips.push('<button class="applied-clear" id="appliedClear">Скинути все</button>');
+  }
+  el.applied.innerHTML = chips.join('');
+  el.applied.hidden = chips.length === 0;
+}
+
+function refreshAll() {
+  visibleCount = PAGE_SIZE;
+  applyFilters();
+  renderGrid();
+  renderFilters();
+  renderApplied();
+}
+
+/* ---------- Grid ---------- */
 
 function cardHTML(p, index) {
   const img2 = p.img2
     ? '<img class="img2" src="' + esc(p.img2) + '" alt="" loading="lazy">'
     : '';
+  const sale = p.sale ? '<span class="card-sale">знижка</span>' : '';
   return '<article class="card" data-index="' + index + '">' +
-    '<div class="card-media">' +
+    '<div class="card-media">' + sale +
       '<img class="img1" src="' + esc(p.img) + '" alt="' + esc(p.title) + '" loading="lazy">' +
       img2 +
     '</div>' +
-    '<p class="card-cat">' + esc(p.category) + '</p>' +
+    '<p class="card-cat">' + esc(p.sub || p.category) + '</p>' +
     '<h3 class="card-title">' + esc(p.title) + '</h3>' +
     '<p class="card-price">' + priceHTML(p) + '</p>' +
   '</article>';
@@ -167,18 +448,17 @@ function renderGrid() {
   el.resultCount.textContent = n === 0
     ? ''
     : n + ' ' + pluralUk(n, 'товар', 'товари', 'товарів');
-}
-
-function resetAndRender() {
-  visibleCount = PAGE_SIZE;
-  applyFilters();
-  renderGrid();
+  if (el.filtersApply) {
+    el.filtersApply.textContent = n === 0
+      ? 'Нічого не знайдено'
+      : 'Показати ' + n + ' ' + pluralUk(n, 'товар', 'товари', 'товарів');
+  }
 }
 
 /* ---------- Modal ---------- */
 
 function openModal(p) {
-  el.modalCat.textContent = p.category;
+  el.modalCat.textContent = p.category + (p.sub ? ' · ' + p.sub : '');
   el.modalTitle.textContent = p.title;
   el.modalPrice.innerHTML = priceHTML(p);
   el.modalDesc.textContent = p.desc || '';
@@ -230,24 +510,92 @@ el.chips.addEventListener('click', function (e) {
   const chip = e.target.closest('.chip');
   if (!chip) return;
   activeCategory = chip.dataset.cat;
+  clearFacets();                      // нова категорія — чисті фільтри
   renderChips();
-  resetAndRender();
+  refreshAll();
 });
 
 el.search.addEventListener('input', function () {
   query = el.search.value;
-  resetAndRender();
+  refreshAll();
 });
 
 el.sort.addEventListener('change', function () {
   sortMode = el.sort.value;
-  resetAndRender();
+  visibleCount = PAGE_SIZE;
+  applyFilters();
+  renderGrid();
 });
 
 el.more.addEventListener('click', function () {
   visibleCount += PAGE_SIZE;
   renderGrid();
 });
+
+// facet checkboxes / size buttons
+el.filterGroups.addEventListener('click', function (e) {
+  const sizeBtn = e.target.closest('.f-size');
+  if (sizeBtn) {
+    toggleFacet('sizes', sizeBtn.dataset.value);
+    refreshAll();
+  }
+});
+el.filterGroups.addEventListener('change', function (e) {
+  const input = e.target;
+  if (input.id === 'priceMin' || input.id === 'priceMax') {
+    const v = input.value === '' ? null : Math.max(0, parseInt(input.value, 10) || 0);
+    if (input.id === 'priceMin') facets.priceMin = v; else facets.priceMax = v;
+    refreshAll();
+    return;
+  }
+  if (!input.dataset.group) return;
+  toggleFacet(input.dataset.group, input.dataset.value);
+  refreshAll();
+});
+
+function toggleFacet(group, value) {
+  if (group === 'sale') { facets.sale = !facets.sale; return; }
+  if (group === 'priceMin') { facets.priceMin = null; return; }
+  if (group === 'priceMax') { facets.priceMax = null; return; }
+  const set = facets[group];
+  if (!set) return;
+  if (set.has(value)) set.delete(value); else set.add(value);
+}
+
+el.applied.addEventListener('click', function (e) {
+  if (e.target.id === 'appliedClear') {
+    clearFacets();
+    refreshAll();
+    return;
+  }
+  const chip = e.target.closest('.applied-chip');
+  if (!chip) return;
+  const g = chip.dataset.group;
+  if (g === 'sale') facets.sale = false;
+  else if (g === 'priceMin') facets.priceMin = null;
+  else if (g === 'priceMax') facets.priceMax = null;
+  else facets[g].delete(chip.dataset.value);
+  refreshAll();
+});
+
+el.filtersReset.addEventListener('click', function () {
+  clearFacets();
+  refreshAll();
+});
+
+// mobile slide-over
+function openFiltersPanel() {
+  document.body.classList.add('filters-open');
+  el.filtersBackdrop.hidden = false;
+}
+function closeFiltersPanel() {
+  document.body.classList.remove('filters-open');
+  el.filtersBackdrop.hidden = true;
+}
+el.filtersToggle.addEventListener('click', openFiltersPanel);
+el.filtersClose.addEventListener('click', closeFiltersPanel);
+el.filtersApply.addEventListener('click', closeFiltersPanel);
+el.filtersBackdrop.addEventListener('click', closeFiltersPanel);
 
 el.grid.addEventListener('click', function (e) {
   const card = e.target.closest('.card');
@@ -268,7 +616,10 @@ el.modalThumbs.addEventListener('click', function (e) {
 el.modalClose.addEventListener('click', closeModal);
 el.modalBackdrop.addEventListener('click', closeModal);
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && !el.modal.hidden) closeModal();
+  if (e.key === 'Escape') {
+    if (!el.modal.hidden) closeModal();
+    else if (document.body.classList.contains('filters-open')) closeFiltersPanel();
+  }
 });
 
 /* ---------- Init ---------- */
@@ -289,14 +640,21 @@ fetch('products.json')
         return t !== 'internal' && t !== 'dnu' && !/gift card/.test(t);
       })
       .map(function (p) {
+        p.priceUSD = parseFloat(p.priceUSD) || 0;
+        p.compareUSD = p.compareUSD != null ? parseFloat(p.compareUSD) || null : null;
+        p.uah = uah(p.priceUSD);
+        p.sale = !!(p.compareUSD && p.compareUSD > p.priceUSD);
         p.category = categoryOf(p.type, p.title);
+        p.sub = subOf(p.type);
+        p.gender = genderOf(p.type);
+        p.colorFam = colorFamilyOf(p.colors);
         return p;
       });
     if (data.generatedAt) {
       el.updatedAt.textContent = 'Каталог оновлено: ' + data.generatedAt;
     }
     renderChips();
-    resetAndRender();
+    refreshAll();
   })
   .catch(function (err) {
     el.resultCount.textContent =

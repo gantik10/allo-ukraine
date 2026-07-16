@@ -32,21 +32,40 @@
         <option value="default">За новизною (як є)</option>
         <option value="asc">Ціна &#8593;</option>
         <option value="desc">Ціна &#8595;</option>
+        <option value="sale">Спершу зі знижкою</option>
       </select>
     </div>
   </nav>
 
   <main class="catalog">
-    <p class="result-count" id="resultCount">Завантаження каталогу&hellip;</p>
-    <div class="grid" id="grid"></div>
-    <div class="empty" id="empty" hidden>
-      <p class="empty-title">Нічого не знайдено</p>
-      <p class="empty-sub">Спробуйте змінити запит або обрати іншу категорію.</p>
+    <div class="catalog-top">
+      <p class="result-count" id="resultCount">Завантаження каталогу&hellip;</p>
+      <button id="filtersToggle" class="btn-outline filters-toggle">Фільтри</button>
     </div>
-    <div class="more-wrap">
-      <button id="more" class="btn-outline" hidden>Показати ще</button>
+    <div class="catalog-layout">
+      <aside class="filters" id="filters" aria-label="Фільтри товарів">
+        <div class="filters-head">
+          <span class="filters-title">Фільтри</span>
+          <button id="filtersReset" class="filters-reset" hidden>Скинути все</button>
+          <button id="filtersClose" class="filters-close" aria-label="Закрити фільтри">&times;</button>
+        </div>
+        <div id="filterGroups"></div>
+        <button id="filtersApply" class="btn-primary filters-apply">Показати товари</button>
+      </aside>
+      <div class="catalog-main">
+        <div class="applied" id="applied" hidden></div>
+        <div class="grid" id="grid"></div>
+        <div class="empty" id="empty" hidden>
+          <p class="empty-title">Нічого не знайдено</p>
+          <p class="empty-sub">Спробуйте змінити запит, зняти фільтри або обрати іншу категорію.</p>
+        </div>
+        <div class="more-wrap">
+          <button id="more" class="btn-outline" hidden>Показати ще</button>
+        </div>
+      </div>
     </div>
   </main>
+  <div class="filters-backdrop" id="filtersBackdrop" hidden></div>
 
   <footer class="site-footer">
     <p class="footer-brand">ALO UKRAINE</p>
