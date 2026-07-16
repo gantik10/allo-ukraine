@@ -214,18 +214,26 @@ const el = {
   filtersReset: document.getElementById('filtersReset'),
   filtersBackdrop: document.getElementById('filtersBackdrop'),
   applied: document.getElementById('applied'),
-  modal: document.getElementById('modal'),
-  modalBackdrop: document.getElementById('modalBackdrop'),
-  modalClose: document.getElementById('modalClose'),
-  modalImg: document.getElementById('modalImg'),
-  modalThumbs: document.getElementById('modalThumbs'),
-  modalCat: document.getElementById('modalCat'),
-  modalTitle: document.getElementById('modalTitle'),
-  modalPrice: document.getElementById('modalPrice'),
-  modalDesc: document.getElementById('modalDesc'),
-  modalSizesBlock: document.getElementById('modalSizesBlock'),
-  modalSizes: document.getElementById('modalSizes'),
-  modalColors: document.getElementById('modalColors'),
+  hero: document.querySelector('.hero'),
+  toolbar: document.querySelector('.toolbar'),
+  catalog: document.querySelector('.catalog'),
+  productPage: document.getElementById('productPage'),
+  ppCrumbs: document.getElementById('ppCrumbs'),
+  ppImg: document.getElementById('ppImg'),
+  ppThumbs: document.getElementById('ppThumbs'),
+  ppCat: document.getElementById('ppCat'),
+  ppTitle: document.getElementById('ppTitle'),
+  ppPrice: document.getElementById('ppPrice'),
+  ppSizesBlock: document.getElementById('ppSizesBlock'),
+  ppSizes: document.getElementById('ppSizes'),
+  ppColors: document.getElementById('ppColors'),
+  ppCopy: document.getElementById('ppCopy'),
+  ppDescBlock: document.getElementById('ppDescBlock'),
+  ppDesc: document.getElementById('ppDesc'),
+  relatedBlock: document.getElementById('relatedBlock'),
+  relatedGrid: document.getElementById('relatedGrid'),
+  recentBlock: document.getElementById('recentBlock'),
+  recentGrid: document.getElementById('recentGrid'),
 };
 
 /* ---------- Chips ---------- */
@@ -420,12 +428,12 @@ function refreshAll() {
 
 /* ---------- Grid ---------- */
 
-function cardHTML(p, index) {
+function cardHTML(p) {
   const img2 = p.img2
     ? '<img class="img2" src="' + esc(p.img2) + '" alt="" loading="lazy">'
     : '';
   const sale = p.sale ? '<span class="card-sale">знижка</span>' : '';
-  return '<article class="card" data-index="' + index + '">' +
+  return '<article class="card" data-handle="' + esc(p.handle) + '">' +
     '<div class="card-media">' + sale +
       '<img class="img1" src="' + esc(p.img) + '" alt="' + esc(p.title) + '" loading="lazy">' +
       img2 +
@@ -438,9 +446,7 @@ function cardHTML(p, index) {
 
 function renderGrid() {
   const slice = filtered.slice(0, visibleCount);
-  el.grid.innerHTML = slice.map(function (p) {
-    return cardHTML(p, filtered.indexOf(p));
-  }).join('');
+  el.grid.innerHTML = slice.map(cardHTML).join('');
 
   const n = filtered.length;
   el.empty.hidden = n !== 0;
@@ -455,54 +461,119 @@ function renderGrid() {
   }
 }
 
-/* ---------- Modal ---------- */
+/* ---------- Product page (hash route #/p/<handle>) ---------- */
 
-function openModal(p) {
-  el.modalCat.textContent = p.category + (p.sub ? ' · ' + p.sub : '');
-  el.modalTitle.textContent = p.title;
-  el.modalPrice.innerHTML = priceHTML(p);
-  el.modalDesc.textContent = p.desc || '';
-  el.modalDesc.hidden = !p.desc;
+let currentProduct = null;
 
-  el.modalImg.src = p.img;
-  el.modalImg.alt = p.title;
+function findByHandle(handle) {
+  for (let i = 0; i < PRODUCTS.length; i++) {
+    if (PRODUCTS[i].handle === handle) return PRODUCTS[i];
+  }
+  return null;
+}
 
+function productHash(p) { return '#/p/' + encodeURIComponent(p.handle); }
+
+const RECENT_KEY = 'alo-recent-v1';
+function recentHandles() {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (e) { return []; }
+}
+function pushRecent(handle) {
+  const list = recentHandles().filter(function (h) { return h !== handle; });
+  list.unshift(handle);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(list.slice(0, 9))); } catch (e) {}
+}
+
+function relatedFor(p, limit) {
+  const sameSub = [];
+  const sameCat = [];
+  for (const x of PRODUCTS) {
+    if (x.handle === p.handle) continue;
+    if (x.category === p.category && x.sub === p.sub) sameSub.push(x);
+    else if (x.category === p.category) sameCat.push(x);
+  }
+  const byPrice = function (a, b) { return Math.abs(a.uah - p.uah) - Math.abs(b.uah - p.uah); };
+  sameSub.sort(byPrice);
+  sameCat.sort(byPrice);
+  return sameSub.concat(sameCat).slice(0, limit);
+}
+
+function showProduct(handle) {
+  const p = findByHandle(handle);
+  if (!p) { location.hash = ''; return; }
+  currentProduct = p;
+
+  el.ppCrumbs.innerHTML =
+    '<a href="#" data-crumb="all">Каталог</a><span>/</span>' +
+    '<a href="#" data-crumb="cat">' + esc(p.category) + '</a>' +
+    (p.sub ? '<span>/</span><a href="#" data-crumb="sub">' + esc(p.sub) + '</a>' : '');
+
+  el.ppCat.textContent = p.category + (p.sub ? ' · ' + p.sub : '');
+  el.ppTitle.textContent = p.title;
+  el.ppPrice.innerHTML = priceHTML(p);
+
+  el.ppImg.src = p.img;
+  el.ppImg.alt = p.title;
   const imgs = [p.img];
   if (p.img2) imgs.push(p.img2);
-  if (imgs.length > 1) {
-    el.modalThumbs.innerHTML = imgs.map(function (src, i) {
-      return '<button class="modal-thumb' + (i === 0 ? ' active' : '') +
-        '" data-src="' + esc(src) + '"><img src="' + esc(src) + '" alt=""></button>';
-    }).join('');
-  } else {
-    el.modalThumbs.innerHTML = '';
-  }
+  el.ppThumbs.innerHTML = imgs.length > 1 ? imgs.map(function (src, i) {
+    return '<button class="modal-thumb' + (i === 0 ? ' active' : '') +
+      '" data-src="' + esc(src) + '"><img src="' + esc(src) + '" alt=""></button>';
+  }).join('') : '';
 
   const sizes = p.sizes || [];
-  el.modalSizesBlock.hidden = sizes.length === 0;
-  el.modalSizes.innerHTML = sizes.map(function (s) {
+  el.ppSizesBlock.hidden = sizes.length === 0;
+  el.ppSizes.innerHTML = sizes.map(function (s) {
     return '<span class="size-chip">' + esc(s) + '</span>';
   }).join('');
 
   const colors = p.colors || [];
-  if (colors.length === 1) {
-    el.modalColors.textContent = 'Колір: ' + colors[0];
-  } else if (colors.length > 1) {
-    el.modalColors.textContent = colors.length + ' ' +
-      pluralUk(colors.length, 'колір', 'кольори', 'кольорів');
-  } else {
-    el.modalColors.textContent = '';
-  }
-  el.modalColors.hidden = colors.length === 0;
+  el.ppColors.textContent = colors.length === 1 ? 'Колір: ' + colors[0]
+    : colors.length > 1 ? colors.length + ' ' + pluralUk(colors.length, 'колір', 'кольори', 'кольорів')
+    : '';
+  el.ppColors.hidden = colors.length === 0;
 
-  el.modal.hidden = false;
-  document.body.classList.add('modal-open');
+  el.ppDesc.textContent = p.desc || '';
+  el.ppDescBlock.hidden = !p.desc;
+
+  const related = relatedFor(p, 8);
+  el.relatedBlock.hidden = related.length === 0;
+  el.relatedGrid.innerHTML = related.map(cardHTML).join('');
+
+  const recent = recentHandles()
+    .filter(function (h) { return h !== p.handle; })
+    .map(findByHandle)
+    .filter(Boolean)
+    .slice(0, 4);
+  el.recentBlock.hidden = recent.length === 0;
+  el.recentGrid.innerHTML = recent.map(cardHTML).join('');
+
+  pushRecent(p.handle);
+
+  el.hero.hidden = true;
+  el.toolbar.hidden = true;
+  el.catalog.hidden = true;
+  el.productPage.hidden = false;
+  closeFiltersPanel();
+  document.title = p.title + ' — ALO UKRAINE';
+  window.scrollTo(0, 0);
 }
 
-function closeModal() {
-  el.modal.hidden = true;
-  document.body.classList.remove('modal-open');
+function showCatalog() {
+  currentProduct = null;
+  el.productPage.hidden = true;
+  el.hero.hidden = false;
+  el.toolbar.hidden = false;
+  el.catalog.hidden = false;
+  document.title = 'ALO UKRAINE — оригінальний Alo Yoga в Україні';
 }
+
+function route() {
+  const m = location.hash.match(/^#\/p\/(.+)$/);
+  if (m && PRODUCTS.length) showProduct(decodeURIComponent(m[1]));
+  else showCatalog();
+}
+window.addEventListener('hashchange', route);
 
 /* ---------- Events ---------- */
 
@@ -517,6 +588,7 @@ el.chips.addEventListener('click', function (e) {
 
 el.search.addEventListener('input', function () {
   query = el.search.value;
+  if (currentProduct) location.hash = '';   // пошук повертає до каталогу
   refreshAll();
 });
 
@@ -597,28 +669,53 @@ el.filtersClose.addEventListener('click', closeFiltersPanel);
 el.filtersApply.addEventListener('click', closeFiltersPanel);
 el.filtersBackdrop.addEventListener('click', closeFiltersPanel);
 
-el.grid.addEventListener('click', function (e) {
-  const card = e.target.closest('.card');
+// any product card (catalog, related, recently viewed) → its page
+document.addEventListener('click', function (e) {
+  const card = e.target.closest('.card[data-handle]');
   if (!card) return;
-  const p = filtered[Number(card.dataset.index)];
-  if (p) openModal(p);
+  const p = findByHandle(card.dataset.handle);
+  if (p) location.hash = productHash(p);
 });
 
-el.modalThumbs.addEventListener('click', function (e) {
+el.ppThumbs.addEventListener('click', function (e) {
   const thumb = e.target.closest('.modal-thumb');
   if (!thumb) return;
-  el.modalImg.src = thumb.dataset.src;
-  el.modalThumbs.querySelectorAll('.modal-thumb').forEach(function (t) {
+  el.ppImg.src = thumb.dataset.src;
+  el.ppThumbs.querySelectorAll('.modal-thumb').forEach(function (t) {
     t.classList.toggle('active', t === thumb);
   });
 });
 
-el.modalClose.addEventListener('click', closeModal);
-el.modalBackdrop.addEventListener('click', closeModal);
+el.ppCrumbs.addEventListener('click', function (e) {
+  const a = e.target.closest('a[data-crumb]');
+  if (!a) return;
+  e.preventDefault();
+  const p = currentProduct;
+  clearFacets();
+  if (a.dataset.crumb === 'all') activeCategory = 'all';
+  else if (p) {
+    activeCategory = p.category;
+    if (a.dataset.crumb === 'sub' && p.sub) facets.subs.add(p.sub);
+  }
+  renderChips();
+  refreshAll();
+  location.hash = '';
+});
+
+el.ppCopy.addEventListener('click', function () {
+  if (!currentProduct) return;
+  const msg = 'Добрий день! Цікавить ' + currentProduct.title +
+    ' (' + fmtUAH(currentProduct.uah) + '). Розмір: ___. Підкажіть, будь ласка, наявність і строки.';
+  navigator.clipboard.writeText(msg).then(function () {
+    el.ppCopy.textContent = 'Скопійовано — вставте в Direct';
+    setTimeout(function () { el.ppCopy.textContent = 'Скопіювати запит для Direct'; }, 2000);
+  });
+});
+
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
-    if (!el.modal.hidden) closeModal();
-    else if (document.body.classList.contains('filters-open')) closeFiltersPanel();
+    if (document.body.classList.contains('filters-open')) closeFiltersPanel();
+    else if (currentProduct) location.hash = '';
   }
 });
 
@@ -655,6 +752,7 @@ fetch('products.json')
     }
     renderChips();
     refreshAll();
+    route();   // підтримка прямих посилань #/p/<handle>
   })
   .catch(function (err) {
     el.resultCount.textContent =

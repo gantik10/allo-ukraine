@@ -67,36 +67,52 @@
   </main>
   <div class="filters-backdrop" id="filtersBackdrop" hidden></div>
 
+  <section class="product-page" id="productPage" hidden>
+    <nav class="pp-crumbs" id="ppCrumbs" aria-label="Хлібні крихти"></nav>
+    <div class="pp-layout">
+      <div class="pp-gallery">
+        <div class="pp-img-wrap"><img id="ppImg" alt=""></div>
+        <div class="pp-thumbs" id="ppThumbs"></div>
+      </div>
+      <div class="pp-info">
+        <p class="pp-cat" id="ppCat"></p>
+        <h1 class="pp-title" id="ppTitle"></h1>
+        <p class="pp-price" id="ppPrice"></p>
+        <div class="pp-sizes" id="ppSizesBlock" hidden>
+          <p class="pp-label">Розміри</p>
+          <div class="size-chips" id="ppSizes"></div>
+        </div>
+        <p class="pp-colors" id="ppColors"></p>
+        <a class="btn-primary pp-cta ig-href" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
+        <button class="btn-outline pp-copy" id="ppCopy">Скопіювати запит для Direct</button>
+        <p class="pp-hint" id="ppHint">Напишіть нам модель і розмір — відповімо за кілька хвилин. Онлайн-оплата скоро.</p>
+        <ul class="pp-perks">
+          <li>Оригінал зі США 🇺🇸</li>
+          <li>Нова пошта по всій Україні</li>
+          <li>В наявності або під замовлення 10–20 днів</li>
+        </ul>
+        <div class="pp-desc-block" id="ppDescBlock" hidden>
+          <p class="pp-label">Опис</p>
+          <p class="pp-desc" id="ppDesc"></p>
+        </div>
+      </div>
+    </div>
+    <section class="pp-related" id="relatedBlock" hidden>
+      <h2 class="pp-h2">Схожі товари</h2>
+      <div class="grid" id="relatedGrid"></div>
+    </section>
+    <section class="pp-related" id="recentBlock" hidden>
+      <h2 class="pp-h2">Ви нещодавно дивились</h2>
+      <div class="grid" id="recentGrid"></div>
+    </section>
+  </section>
+
   <footer class="site-footer">
     <p class="footer-brand">ALO UKRAINE</p>
     <p class="footer-note">ALO UKRAINE — незалежний магазин. Не є офіційним представництвом Alo Yoga.</p>
     <p class="footer-links"><a class="ig-href" href="#" target="_blank" rel="noopener">Instagram</a></p>
     <p class="footer-updated" id="updatedAt"></p>
   </footer>
-
-  <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-panel">
-      <button class="modal-close" id="modalClose" aria-label="Закрити">&times;</button>
-      <div class="modal-media">
-        <div class="modal-img-wrap"><img id="modalImg" alt=""></div>
-        <div class="modal-thumbs" id="modalThumbs"></div>
-      </div>
-      <div class="modal-info">
-        <p class="modal-cat" id="modalCat"></p>
-        <h2 class="modal-title" id="modalTitle"></h2>
-        <p class="modal-price" id="modalPrice"></p>
-        <p class="modal-desc" id="modalDesc"></p>
-        <div class="modal-sizes" id="modalSizesBlock" hidden>
-          <p class="modal-label">Розміри</p>
-          <div class="size-chips" id="modalSizes"></div>
-        </div>
-        <p class="modal-colors" id="modalColors"></p>
-        <a class="btn-primary modal-cta ig-href" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
-        <p class="modal-hint">Напишіть нам модель і розмір — відповімо за кілька хвилин. Онлайн-оплата скоро.</p>
-      </div>
-    </div>
-  </div>
 
   <script src="app.js"></script>
 </body>
