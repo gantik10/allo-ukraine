@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Щоденний запуск автопостера о 12:00 (macOS launchd).
+  Встановлення:
+    cp com.alo.autoposter.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.alo.autoposter.plist
+  Зняти:
+    launchctl unload ~/Library/LaunchAgents/com.alo.autoposter.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.alo.autoposter</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/kg/Downloads/Allo Ukraine/autoposter/autoposter.py</string>
+    <string>--post</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>12</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+  <key>StandardOutPath</key><string>/Users/kg/Downloads/Allo Ukraine/autoposter/autoposter.log</string>
+  <key>StandardErrorPath</key><string>/Users/kg/Downloads/Allo Ukraine/autoposter/autoposter.log</string>
+</dict>
+</plist>

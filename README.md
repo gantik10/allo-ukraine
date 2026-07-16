@@ -7,6 +7,7 @@
 | Сайт-вітрина (каталог Alo, ~3,6 тис. товарів) | `store/` → `./start.sh` → :8767 | `/` |
 | Адмін-панель (дашборд, товари, замовлення, оплати — заглушки) | `admin/` | `/admin/` |
 | Планер Instagram-постів із ChatGPT-копірайтером | `planner/` → `./start.sh` → :8766 | `/admin/planner/` |
+| Автопостер в Instagram (Meta Graph API + ChatGPT) | `autoposter/` → див. README | — |
 
 Деплой: `./deploy.sh` — збирає сайт (магазин у корінь, адмінка + планер у `/admin`) і пушить у гілку `gh-pages`, звідки публікує GitHub Pages.
 
