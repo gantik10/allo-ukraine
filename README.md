@@ -8,7 +8,7 @@
 | Адмін-панель (дашборд, товари, замовлення, оплати — заглушки) | `admin/` | `/admin/` |
 | Планер Instagram-постів із ChatGPT-копірайтером | `planner/` → `./start.sh` → :8766 | `/admin/planner/` |
 
-Деплой: пуш у `main` → GitHub Actions збирає сайт (`.github/workflows/deploy.yml`) і публікує на Pages.
+Деплой: `./deploy.sh` — збирає сайт (магазин у корінь, адмінка + планер у `/admin`) і пушить у гілку `gh-pages`, звідки публікує GitHub Pages.
 
 - Оновити каталог: `store/fetch_products.sh`, потім закомітити `store/products.json`.
 - Додали фото в `planner/images/` — запустіть `planner/gen_manifest.sh` перед пушем (на Pages немає лістингу директорій).
