@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALO UKRAINE — оригінальний Alo Yoga в Україні</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="announce">Онлайн-оплата з&rsquo;явиться незабаром &middot; Зараз замовлення приймаємо в Instagram Direct</div>
+
+  <header class="site-header">
+    <a class="wordmark" href="#">ALO&nbsp;UKRAINE</a>
+    <div class="search-wrap">
+      <input id="search" class="search" type="search" placeholder="Пошук по каталогу" aria-label="Пошук по каталогу" autocomplete="off">
+    </div>
+    <a class="header-link ig-href" href="#" target="_blank" rel="noopener">Instagram</a>
+  </header>
+
+  <section class="hero">
+    <h1>Alo Yoga. Тепер в&nbsp;Україні.</h1>
+    <p class="hero-sub">Оригінальні речі бренду, у якому живе Голлівуд. В наявності та під замовлення.</p>
+    <a class="btn-primary ig-href" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
+  </section>
+
+  <nav class="toolbar" aria-label="Фільтри каталогу">
+    <div class="chips" id="chips"></div>
+    <div class="sort-wrap">
+      <label class="sort-label" for="sort">Сортування</label>
+      <select id="sort" class="sort">
+        <option value="default">За новизною (як є)</option>
+        <option value="asc">Ціна &#8593;</option>
+        <option value="desc">Ціна &#8595;</option>
+      </select>
+    </div>
+  </nav>
+
+  <main class="catalog">
+    <p class="result-count" id="resultCount">Завантаження каталогу&hellip;</p>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <p class="empty-title">Нічого не знайдено</p>
+      <p class="empty-sub">Спробуйте змінити запит або обрати іншу категорію.</p>
+    </div>
+    <div class="more-wrap">
+      <button id="more" class="btn-outline" hidden>Показати ще</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-brand">ALO UKRAINE</p>
+    <p class="footer-note">ALO UKRAINE — незалежний магазин. Не є офіційним представництвом Alo Yoga.</p>
+    <p class="footer-links"><a class="ig-href" href="#" target="_blank" rel="noopener">Instagram</a></p>
+    <p class="footer-updated" id="updatedAt"></p>
+  </footer>
+
+  <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel">
+      <button class="modal-close" id="modalClose" aria-label="Закрити">&times;</button>
+      <div class="modal-media">
+        <div class="modal-img-wrap"><img id="modalImg" alt=""></div>
+        <div class="modal-thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="modal-info">
+        <p class="modal-cat" id="modalCat"></p>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <p class="modal-price" id="modalPrice"></p>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-sizes" id="modalSizesBlock" hidden>
+          <p class="modal-label">Розміри</p>
+          <div class="size-chips" id="modalSizes"></div>
+        </div>
+        <p class="modal-colors" id="modalColors"></p>
+        <a class="btn-primary modal-cta ig-href" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
+        <p class="modal-hint">Напишіть нам модель і розмір — відповімо за кілька хвилин. Онлайн-оплата скоро.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

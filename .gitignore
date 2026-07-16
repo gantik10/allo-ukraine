@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+node_modules/
+_site/
+
+# внутрішні робочі документи — не для публічного репозиторію
+DIRECT_SALES_PLAYBOOK.md
+TZ_STORE_CLAUDE_DESIGN.md
