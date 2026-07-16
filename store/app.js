@@ -28,31 +28,25 @@ function priceHTML(p) {
 /* ---------- Categories ---------- */
 
 const CATEGORY_ORDER = [
-  'Бра',
-  'Легінси та штани',
-  'Шорти',
-  'Топи та футболки',
-  'Світшоти та куртки',
-  'Спідниці та сукні',
-  'Взуття',
-  'Аксесуари',
-  'Б’юті',
+  'Падел і теніс',
+  'Спортзал',
+  'Сумки та аксесуари',
+  'Жіноче',
   'Чоловіче',
+  'Б’юті та велнес',
   'Інше',
 ];
 
-function categoryOf(type) {
-  const t = (type || '').toLowerCase();
-  if (t.startsWith('men:') || t.startsWith('men’s') || t.startsWith("men's")) return 'Чоловіче';
-  if (t.includes('bras')) return 'Бра';
-  if (t.includes('shorts')) return 'Шорти';
-  if (/sweatshirt|hoodie|sweatpant|sweater|coverup|jacket/.test(t)) return 'Світшоти та куртки';
-  if (t.includes('legging') || t.includes('pant')) return 'Легінси та штани';
-  if (/top|tee|tank|long sleeve/.test(t)) return 'Топи та футболки';
-  if (t.includes('skirt') || t.includes('dress')) return 'Спідниці та сукні';
-  if (t.includes('shoe') || t.includes('sneaker')) return 'Взуття';
-  if (/accessor|bag|hat|sock/.test(t)) return 'Аксесуари';
-  if (t.includes('beauty') || t.includes('wellness')) return 'Б’юті';
+const TENNIS_RE = /tennis|match point|courtside|game on|grand slam|pickleball|padel|skort|tiebreak|baseline|clubhouse/i;
+
+function categoryOf(type, title) {
+  const t = type || '';
+  if (TENNIS_RE.test(title || '') || t.includes('Skirts')) return 'Падел і теніс';
+  if (t.includes('Accessories') || t.includes('Luxury') || t === 'Books') return 'Сумки та аксесуари';
+  if (t.startsWith('Beauty') || t.startsWith('Wellness')) return 'Б’юті та велнес';
+  if (/:(Leggings|Bras|Shorts|Tanks|Onesies)/.test(t)) return 'Спортзал';
+  if (t.startsWith('Men')) return 'Чоловіче';
+  if (t.startsWith('Women')) return 'Жіноче';
   return 'Інше';
 }
 
@@ -295,7 +289,7 @@ fetch('products.json')
         return t !== 'internal' && t !== 'dnu' && !/gift card/.test(t);
       })
       .map(function (p) {
-        p.category = categoryOf(p.type);
+        p.category = categoryOf(p.type, p.title);
         return p;
       });
     if (data.generatedAt) {
