@@ -676,3 +676,54 @@ body.modal-open { overflow: hidden; }
   .product-page { padding: 16px 16px 56px; }
   .pp-related { margin-top: 44px; }
 }
+
+/* ---------- PDP v2: swatches, sizes, accordions ---------- */
+
+.pp-colorblock { margin-bottom: 18px; }
+.pp-color-name { text-transform: none; letter-spacing: 0; color: var(--ink); }
+.pp-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.pp-swatch {
+  width: 46px; height: 60px;
+  border: 1px solid var(--line);
+  padding: 0; overflow: hidden;
+  background: var(--card-bg);
+  transition: border-color .15s;
+}
+.pp-swatch img { width: 100%; height: 100%; object-fit: cover; }
+.pp-swatch:hover { border-color: var(--muted); }
+.pp-swatch.active { border: 2px solid var(--ink); }
+
+.pp-size-btn {
+  border: 1px solid var(--line);
+  background: var(--white);
+  min-width: 46px;
+  padding: 9px 12px;
+  font-size: 13px;
+  text-align: center;
+  transition: border-color .15s, background .15s;
+}
+.pp-size-btn:hover { border-color: var(--ink); }
+.pp-size-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pp-size-btn.oos { color: var(--muted); text-decoration: line-through; background: var(--card-bg); }
+.pp-size-btn.oos.active { background: var(--ink); color: #fff; text-decoration: line-through; }
+.pp-size-hint { color: var(--muted); text-transform: none; letter-spacing: 0; }
+.pp-size-note { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+.pp-accs { border-top: 1px solid var(--line); margin-top: 22px; }
+.pp-acc { border-bottom: 1px solid var(--line); }
+.pp-acc summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pp-acc summary::-webkit-details-marker { display: none; }
+.pp-acc summary::after { content: '+'; color: var(--muted); font-size: 16px; }
+.pp-acc[open] summary::after { content: '−'; }
+.pp-acc-body { padding: 0 0 16px; font-size: 14px; line-height: 1.65; color: #3E3A34; }
+.pp-feats { margin: 10px 0 0 18px; display: grid; gap: 5px; font-size: 13px; }

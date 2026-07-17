@@ -32,9 +32,17 @@ async function loadCatalog() {
   if (CATALOG) return CATALOG;
   const r = await fetch(PATHS.products);
   const data = await r.json();
+  const cdn = data.cdnBase || '';
   data.products = (data.products || []).filter(p => {
     const t = (p.type || '').toLowerCase();
     return t !== 'internal' && t !== 'dnu' && !/gift card/.test(t);
+  }).map(p => {
+    if (!p.img && p.imgs && p.imgs.length) {
+      const n = p.imgs[0];
+      const full = /^https?:/.test(n) ? n : cdn + n;
+      p.img = full + (full.indexOf('?') > -1 ? '&' : '?') + 'width=200';
+    }
+    return p;
   });
   CATALOG = data;
   return data;

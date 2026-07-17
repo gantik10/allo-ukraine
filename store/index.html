@@ -78,12 +78,16 @@
         <p class="pp-cat" id="ppCat"></p>
         <h1 class="pp-title" id="ppTitle"></h1>
         <p class="pp-price" id="ppPrice"></p>
-        <div class="pp-sizes" id="ppSizesBlock" hidden>
-          <p class="pp-label">Розміри</p>
-          <div class="size-chips" id="ppSizes"></div>
+        <div class="pp-colorblock" id="ppColorBlock" hidden>
+          <p class="pp-label">Колір: <span class="pp-color-name" id="ppColorName"></span></p>
+          <div class="pp-swatches" id="ppSwatches"></div>
         </div>
-        <p class="pp-colors" id="ppColors"></p>
-        <a class="btn-primary pp-cta ig-href" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
+        <div class="pp-sizes" id="ppSizesBlock" hidden>
+          <p class="pp-label">Розмір <span class="pp-size-hint" id="ppSizeHint"></span></p>
+          <div class="size-chips" id="ppSizes"></div>
+          <p class="pp-size-note">Закреслений розмір — зараз немає на складі бренду, уточніть у Direct.</p>
+        </div>
+        <a class="btn-primary pp-cta ig-href" id="ppCta" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
         <button class="btn-outline pp-copy" id="ppCopy">Скопіювати запит для Direct</button>
         <p class="pp-hint" id="ppHint">Напишіть нам модель і розмір — відповімо за кілька хвилин. Онлайн-оплата скоро.</p>
         <ul class="pp-perks">
@@ -91,14 +95,35 @@
           <li>Нова пошта по всій Україні</li>
           <li>В наявності або під замовлення 10–20 днів</li>
         </ul>
-        <div class="pp-desc-block" id="ppDescBlock" hidden>
-          <p class="pp-label">Опис</p>
-          <p class="pp-desc" id="ppDesc"></p>
+        <div class="pp-accs">
+          <details class="pp-acc" id="ppDescBlock" open>
+            <summary>Опис і деталі</summary>
+            <div class="pp-acc-body">
+              <p class="pp-desc" id="ppDesc"></p>
+              <ul class="pp-feats" id="ppFeats"></ul>
+            </div>
+          </details>
+          <details class="pp-acc">
+            <summary>Доставка і оплата</summary>
+            <div class="pp-acc-body">
+              <p>Нова пошта по всій Україні. Речі в наявності відправляємо за 1–2 дні, під замовлення — 10–20 днів. Оплата: передоплата на рахунок ФОП / картку або накладений платіж із передоплатою 200 грн.</p>
+            </div>
+          </details>
+          <details class="pp-acc">
+            <summary>Оригінальність</summary>
+            <div class="pp-acc-body">
+              <p>Кожна річ — з фірмовим пакуванням, бирками та чеком. Перед відправкою надішлемо фото саме вашої речі в Direct.</p>
+            </div>
+          </details>
         </div>
       </div>
     </div>
+    <section class="pp-related" id="styleBlock" hidden>
+      <h2 class="pp-h2">Доповнити образ</h2>
+      <div class="grid" id="styleGrid"></div>
+    </section>
     <section class="pp-related" id="relatedBlock" hidden>
-      <h2 class="pp-h2">Схожі товари</h2>
+      <h2 class="pp-h2">Вам може сподобатися</h2>
       <div class="grid" id="relatedGrid"></div>
     </section>
     <section class="pp-related" id="recentBlock" hidden>

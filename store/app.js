@@ -7,6 +7,15 @@ const MARKUP = 1.45;                // store margin
 const IG_URL = 'https://instagram.com/alo.ukraine';
 const PAGE_SIZE = 24;               // cards per "Показати ще" chunk
 
+let CDN_BASE = '';                  // з products.json (cdnBase)
+
+// Ім'я файла з products.json → повний URL потрібної ширини (Shopify image CDN)
+function imgURL(name, w) {
+  if (!name) return '';
+  const full = /^https?:/.test(name) ? name : CDN_BASE + name;
+  return full + (full.indexOf('?') > -1 ? '&' : '?') + 'width=' + w;
+}
+
 /* ---------- Pricing ---------- */
 
 function uah(usd) {
@@ -226,10 +235,17 @@ const el = {
   ppPrice: document.getElementById('ppPrice'),
   ppSizesBlock: document.getElementById('ppSizesBlock'),
   ppSizes: document.getElementById('ppSizes'),
-  ppColors: document.getElementById('ppColors'),
+  ppSizeHint: document.getElementById('ppSizeHint'),
+  ppColorBlock: document.getElementById('ppColorBlock'),
+  ppColorName: document.getElementById('ppColorName'),
+  ppSwatches: document.getElementById('ppSwatches'),
+  ppCta: document.getElementById('ppCta'),
   ppCopy: document.getElementById('ppCopy'),
   ppDescBlock: document.getElementById('ppDescBlock'),
   ppDesc: document.getElementById('ppDesc'),
+  ppFeats: document.getElementById('ppFeats'),
+  styleBlock: document.getElementById('styleBlock'),
+  styleGrid: document.getElementById('styleGrid'),
   relatedBlock: document.getElementById('relatedBlock'),
   relatedGrid: document.getElementById('relatedGrid'),
   recentBlock: document.getElementById('recentBlock'),
@@ -484,6 +500,56 @@ function pushRecent(handle) {
   try { localStorage.setItem(RECENT_KEY, JSON.stringify(list.slice(0, 9))); } catch (e) {}
 }
 
+// «Доповнити образ»: що носять разом із цим типом речей
+const STYLE_WITH = {
+  'Легінси': ['Бра', 'Майки', 'Світшоти', 'Худі'],
+  'Бра': ['Легінси', 'Шорти', 'Спідниці', 'Джогери та штани'],
+  'Шорти': ['Майки', 'Бра', 'Худі', 'Футболки'],
+  'Джогери та штани': ['Худі', 'Світшоти', 'Футболки'],
+  'Спідниці': ['Бра', 'Майки', 'Кросівки'],
+  'Сукні': ['Кросівки', 'Сумки', 'Шкарпетки'],
+  'Кросівки': ['Шкарпетки', 'Легінси', 'Шорти'],
+  'М’юли': ['Шкарпетки', 'Сумки'],
+  'Худі': ['Легінси', 'Джогери та штани'],
+  'Світшоти': ['Легінси', 'Джогери та штани'],
+  'Майки': ['Легінси', 'Шорти'],
+  'Футболки': ['Шорти', 'Джогери та штани'],
+  'Мати': ['Шкарпетки', 'Пов’язки та волосся', 'Пляшки'],
+};
+
+function genderOK(p, x) {
+  if (x.gender === 'Унісекс' || p.gender === 'Унісекс') return true;
+  return x.gender === p.gender;
+}
+
+function styleFor(p, limit) {
+  const subs = STYLE_WITH[p.sub];
+  if (!subs) return [];
+  const bySub = subs.map(function (sub) {
+    return PRODUCTS.filter(function (x) {
+      return x.sub === sub && x.handle !== p.handle && genderOK(p, x);
+    }).slice(0, 3);
+  });
+  const out = [];
+  for (let i = 0; i < 3; i++) {
+    for (const list of bySub) {
+      if (list[i]) out.push(list[i]);
+      if (out.length >= limit) return out;
+    }
+  }
+  return out;
+}
+
+function colorSiblings(p) {
+  const seen = {};
+  return PRODUCTS.filter(function (x) {
+    if (x.model !== p.model || x.gender !== p.gender || x.handle === p.handle) return false;
+    if (seen[x.handle]) return false;
+    seen[x.handle] = true;
+    return true;
+  }).slice(0, 11);
+}
+
 function relatedFor(p, limit) {
   const sameSub = [];
   const sameCat = [];
@@ -498,10 +564,13 @@ function relatedFor(p, limit) {
   return sameSub.concat(sameCat).slice(0, limit);
 }
 
+let selectedSize = null;
+
 function showProduct(handle) {
   const p = findByHandle(handle);
   if (!p) { location.hash = ''; return; }
   currentProduct = p;
+  selectedSize = null;
 
   el.ppCrumbs.innerHTML =
     '<a href="#" data-crumb="all">Каталог</a><span>/</span>' +
@@ -512,29 +581,48 @@ function showProduct(handle) {
   el.ppTitle.textContent = p.title;
   el.ppPrice.innerHTML = priceHTML(p);
 
-  el.ppImg.src = p.img;
+  // Галерея: всі фото товару
+  el.ppImg.src = imgURL(p.imgs[0], 1600);
   el.ppImg.alt = p.title;
-  const imgs = [p.img];
-  if (p.img2) imgs.push(p.img2);
-  el.ppThumbs.innerHTML = imgs.length > 1 ? imgs.map(function (src, i) {
+  el.ppThumbs.innerHTML = p.imgs.length > 1 ? p.imgs.map(function (name, i) {
     return '<button class="modal-thumb' + (i === 0 ? ' active' : '') +
-      '" data-src="' + esc(src) + '"><img src="' + esc(src) + '" alt=""></button>';
+      '" data-src="' + esc(imgURL(name, 1600)) + '">' +
+      '<img src="' + esc(imgURL(name, 200)) + '" alt="" loading="lazy"></button>';
   }).join('') : '';
 
-  const sizes = p.sizes || [];
-  el.ppSizesBlock.hidden = sizes.length === 0;
-  el.ppSizes.innerHTML = sizes.map(function (s) {
-    return '<span class="size-chip">' + esc(s) + '</span>';
+  // Кольори цієї моделі (інші товари-кольорові варіанти)
+  const siblings = colorSiblings(p);
+  el.ppColorBlock.hidden = !(p.colors || []).length && !siblings.length;
+  el.ppColorName.textContent = (p.colors && p.colors[0]) || '';
+  el.ppSwatches.innerHTML = [p].concat(siblings).map(function (x) {
+    return '<button class="pp-swatch' + (x.handle === p.handle ? ' active' : '') +
+      '" data-handle="' + esc(x.handle) + '" title="' + esc((x.colors && x.colors[0]) || x.title) + '">' +
+      '<img src="' + esc(imgURL(x.imgs[0], 120)) + '" alt="" loading="lazy"></button>';
   }).join('');
 
-  const colors = p.colors || [];
-  el.ppColors.textContent = colors.length === 1 ? 'Колір: ' + colors[0]
-    : colors.length > 1 ? colors.length + ' ' + pluralUk(colors.length, 'колір', 'кольори', 'кольорів')
-    : '';
-  el.ppColors.hidden = colors.length === 0;
+  // Розміри з наявністю (перекреслені = немає на складі бренду)
+  const sizesA = p.sizesA || [];
+  el.ppSizesBlock.hidden = sizesA.length === 0;
+  el.ppSizes.innerHTML = sizesA.map(function (s) {
+    return '<button class="size-chip pp-size-btn' + (s[1] ? '' : ' oos') +
+      '" data-size="' + esc(s[0]) + '">' + esc(s[0]) + '</button>';
+  }).join('');
+  el.ppSizeHint.textContent = '';
 
+  el.ppCta.textContent = p.available ? 'Замовити в Direct' : 'Дізнатись про наявність — Direct';
+
+  // Опис і деталі
   el.ppDesc.textContent = p.desc || '';
-  el.ppDescBlock.hidden = !p.desc;
+  el.ppDesc.hidden = !p.desc;
+  el.ppFeats.innerHTML = (p.feats || []).map(function (f) {
+    return '<li>' + esc(f) + '</li>';
+  }).join('');
+  el.ppDescBlock.hidden = !p.desc && !(p.feats || []).length;
+
+  // Добірки
+  const style = styleFor(p, 8);
+  el.styleBlock.hidden = style.length === 0;
+  el.styleGrid.innerHTML = style.map(cardHTML).join('');
 
   const related = relatedFor(p, 8);
   el.relatedBlock.hidden = related.length === 0;
@@ -669,12 +757,23 @@ el.filtersClose.addEventListener('click', closeFiltersPanel);
 el.filtersApply.addEventListener('click', closeFiltersPanel);
 el.filtersBackdrop.addEventListener('click', closeFiltersPanel);
 
-// any product card (catalog, related, recently viewed) → its page
+// any product card (catalog, related, style, recent) or color swatch → its page
 document.addEventListener('click', function (e) {
-  const card = e.target.closest('.card[data-handle]');
-  if (!card) return;
-  const p = findByHandle(card.dataset.handle);
-  if (p) location.hash = productHash(p);
+  const node = e.target.closest('.card[data-handle], .pp-swatch[data-handle]');
+  if (!node) return;
+  const p = findByHandle(node.dataset.handle);
+  if (p && (!currentProduct || p.handle !== currentProduct.handle)) location.hash = productHash(p);
+});
+
+// size selection on the product page
+el.ppSizes.addEventListener('click', function (e) {
+  const btn = e.target.closest('.pp-size-btn');
+  if (!btn) return;
+  selectedSize = btn.dataset.size === selectedSize ? null : btn.dataset.size;
+  el.ppSizes.querySelectorAll('.pp-size-btn').forEach(function (b) {
+    b.classList.toggle('active', b.dataset.size === selectedSize);
+  });
+  el.ppSizeHint.textContent = selectedSize ? '· обрано: ' + selectedSize : '';
 });
 
 el.ppThumbs.addEventListener('click', function (e) {
@@ -705,7 +804,8 @@ el.ppCrumbs.addEventListener('click', function (e) {
 el.ppCopy.addEventListener('click', function () {
   if (!currentProduct) return;
   const msg = 'Добрий день! Цікавить ' + currentProduct.title +
-    ' (' + fmtUAH(currentProduct.uah) + '). Розмір: ___. Підкажіть, будь ласка, наявність і строки.';
+    ' (' + fmtUAH(currentProduct.uah) + '). Розмір: ' + (selectedSize || '___') +
+    '. Підкажіть, будь ласка, наявність і строки.';
   navigator.clipboard.writeText(msg).then(function () {
     el.ppCopy.textContent = 'Скопійовано — вставте в Direct';
     setTimeout(function () { el.ppCopy.textContent = 'Скопіювати запит для Direct'; }, 2000);
@@ -731,6 +831,7 @@ fetch('products.json')
     return r.json();
   })
   .then(function (data) {
+    CDN_BASE = data.cdnBase || '';
     PRODUCTS = data.products
       .filter(function (p) {
         var t = (p.type || '').toLowerCase();
@@ -741,6 +842,13 @@ fetch('products.json')
         p.compareUSD = p.compareUSD != null ? parseFloat(p.compareUSD) || null : null;
         p.uah = uah(p.priceUSD);
         p.sale = !!(p.compareUSD && p.compareUSD > p.priceUSD);
+        p.imgs = p.imgs || (p.img ? [p.img] : []);          // сумісність зі старим форматом
+        p.img = imgURL(p.imgs[0], 800);
+        p.img2 = p.imgs[1] ? imgURL(p.imgs[1], 800) : null;
+        p.sizesA = p.sizesA || (p.sizes || []).map(function (s) { return [s, 1]; });
+        p.sizes = p.sizesA.map(function (s) { return s[0]; });
+        p.available = p.avail != null ? !!p.avail : true;
+        p.model = p.title.split(' - ')[0].trim();            // для звʼязки кольорів однієї моделі
         p.category = categoryOf(p.type, p.title);
         p.sub = subOf(p.type);
         p.gender = genderOf(p.type);

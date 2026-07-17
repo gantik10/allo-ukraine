@@ -1,106 +1,97 @@
 #!/bin/bash
-# Refresh the ALO UKRAINE catalog from aloyoga.com (Shopify public products endpoint).
-# Usage: ./fetch_products.sh
-# Writes products.json ({"generatedAt": "...", "products": [...]}) next to this script.
-set -euo pipefail
-
-DIR="$(cd "$(dirname "$0")" && pwd)"
-TMP="$(mktemp -d)"
+# Оновлення каталогу з aloyoga.com → products.json (rich-формат для сторінки товару:
+# всі фото, наявність по розмірах, повний опис і буллети).
+set -e
+cd "$(dirname "$0")"
+UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
-UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
-MAX_PAGES=30
-
-for ((page=1; page<=MAX_PAGES; page++)); do
-  echo "Fetching page $page..." >&2
-  curl -sf -A "$UA" "https://www.aloyoga.com/products.json?limit=250&page=$page" \
-    -o "$TMP/page$page.json"
-  count=$(python3 -c "import json,sys; print(len(json.load(open(sys.argv[1]))['products']))" "$TMP/page$page.json")
-  echo "  -> $count products" >&2
-  if [ "$count" -eq 0 ]; then
-    rm -f "$TMP/page$page.json"
-    break
-  fi
-  if [ "$page" -eq "$MAX_PAGES" ]; then
-    echo "Warning: hit page cap ($MAX_PAGES); catalog may be truncated." >&2
-  fi
+page=1
+while [ $page -le 30 ]; do
+  curl -s --max-time 60 -H "User-Agent: $UA" "https://www.aloyoga.com/products.json?limit=250&page=$page" -o "$TMP/p$page.json"
+  count=$(python3 -c "import json;print(len(json.load(open('$TMP/p$page.json'))['products']))" 2>/dev/null || echo 0)
+  echo "page $page: $count"
+  [ "$count" = "0" ] && break
+  page=$((page+1))
   sleep 1
 done
+if [ $page -gt 30 ]; then echo "WARN: 30-page cap reached — catalog may be truncated"; fi
 
-python3 - "$TMP" "$DIR/products.json" <<'PYEOF'
-import glob, html, json, os, re, sys
-from datetime import datetime, timezone
-
-tmp_dir, out_path = sys.argv[1], sys.argv[2]
-TAG_RE = re.compile(r'<[^>]+>')
-WS_RE = re.compile(r'\s+')
-
-def strip_html(s, limit=300):
-    if not s:
-        return ''
-    text = WS_RE.sub(' ', html.unescape(TAG_RE.sub(' ', s))).strip()
-    if len(text) > limit:
-        text = text[:limit].rsplit(' ', 1)[0].rstrip() + '…'
-    return text
-
-products, seen = [], set()
-files = sorted(glob.glob(os.path.join(tmp_dir, 'page*.json')),
-               key=lambda f: int(re.search(r'page(\d+)', f).group(1)))
-for f in files:
-    with open(f) as fh:
-        data = json.load(fh)
-    for p in data['products']:
-        if p['id'] in seen:
+TMPDIR_ARG="$TMP" python3 <<'PYEOF'
+import json, re, glob, os, datetime
+tmp = os.environ['TMPDIR_ARG']
+CDN = "https://cdn.shopify.com/s/files/1/2185/2813/files/"
+out, seen = [], set()
+for f in sorted(glob.glob(tmp + '/p*.json'), key=lambda x: int(re.search(r'p(\d+)\.json$', x).group(1))):
+    try:
+        prods = json.load(open(f))['products']
+    except Exception:
+        continue
+    for p in prods:
+        pid = str(p['id'])
+        if pid in seen:
             continue
-        seen.add(p['id'])
+        seen.add(pid)
+        t = p.get('product_type') or ''
+        if t.lower() in ('internal', 'dnu') or 'gift card' in t.lower():
+            continue
         variants = p.get('variants') or []
-        images = p.get('images') or []
-        if not variants or not images:
+        if not variants:
             continue
-        v = variants[0]
         try:
-            price = float(v.get('price') or 0)
-        except (TypeError, ValueError):
+            pr = float(variants[0].get('price') or 0)
+        except Exception:
             continue
-        if price <= 0:
+        if pr <= 0:
             continue
-        compare = None
+        imgs = []
+        for im in (p.get('images') or [])[:5]:
+            src = im.get('src') or ''
+            if src.startswith(CDN):
+                src = src[len(CDN):]
+            if src:
+                imgs.append(src)
+        if not imgs:
+            continue
+        html = p.get('body_html') or ''
+        feats = [re.sub(r'<[^>]+>', '', li).strip() for li in re.findall(r'<li[^>]*>(.*?)</li>', html, re.S)]
+        feats = [x for x in feats if x][:6]
+        desc = re.sub(r'<li[^>]*>.*?</li>', ' ', html, flags=re.S)
+        desc = re.sub(r'<[^>]+>', ' ', desc)
+        desc = re.sub(r'\s+', ' ', desc).strip()[:500]
+        colors = []
+        size_pos = None
+        for o in (p.get('options') or []):
+            n = (o.get('name') or '').lower()
+            if n in ('color', 'colour'):
+                colors = o.get('values') or []
+            if n == 'size':
+                size_pos = o.get('position')
+        sd, order = {}, []
+        for v in variants:
+            sz = v.get('option%d' % size_pos) if size_pos else None
+            if not sz:
+                continue
+            if sz not in sd:
+                sd[sz] = 0
+                order.append(sz)
+            if v.get('available'):
+                sd[sz] = 1
+        sizesA = [[s, sd[s]] for s in order]
+        avail = 1 if any(v.get('available') for v in variants) else 0
+        cmp_ = variants[0].get('compare_at_price')
         try:
-            c = float(v.get('compare_at_price') or 0)
-            if c > 0:
-                compare = c
-        except (TypeError, ValueError):
-            pass
-        colors, sizes = [], []
-        for opt in (p.get('options') or []):
-            name = (opt.get('name') or '').strip().lower()
-            if name in ('color', 'colour'):
-                colors = opt.get('values') or []
-            elif name == 'size':
-                sizes = opt.get('values') or []
-        products.append({
-            'id': p['id'],
-            'title': p.get('title') or '',
-            'handle': p.get('handle') or '',
-            'type': p.get('product_type') or '',
-            'priceUSD': price,
-            'compareUSD': compare,
-            'img': images[0].get('src'),
-            'img2': images[1].get('src') if len(images) > 1 else None,
-            'desc': strip_html(p.get('body_html')),
-            'colors': colors,
-            'sizes': sizes,
-        })
-
-out = {
-    'generatedAt': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'),
-    'products': products,
-}
-with open(out_path, 'w') as fh:
-    json.dump(out, fh, ensure_ascii=False, separators=(',', ':'))
-
-size_mb = os.path.getsize(out_path) / 1024 / 1024
-print(f'Wrote {len(products)} products to {out_path} ({size_mb:.1f} MB)', file=sys.stderr)
-if size_mb > 6:
-    print('Warning: file exceeds 6 MB; consider truncating descriptions harder.', file=sys.stderr)
+            cmp_ = float(cmp_) if cmp_ else None
+        except Exception:
+            cmp_ = None
+        out.append({'id': pid, 'title': p.get('title', ''), 'handle': p.get('handle', ''), 'type': t,
+                    'priceUSD': pr, 'compareUSD': cmp_, 'imgs': imgs, 'desc': desc, 'feats': feats,
+                    'colors': colors, 'sizesA': sizesA, 'avail': avail})
+json.dump({'generatedAt': datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC'), 'cdnBase': CDN, 'products': out},
+          open('products.json', 'w'), ensure_ascii=False, separators=(',', ':'))
+print('products:', len(out))
 PYEOF
+
+ls -lh products.json
+echo "done → products.json"
