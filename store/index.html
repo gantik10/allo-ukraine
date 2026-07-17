@@ -138,6 +138,14 @@
     <p class="footer-updated" id="updatedAt"></p>
   </footer>
 
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Перегляд фото">
+    <button class="lb-close" id="lbClose" aria-label="Закрити">&times;</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Попереднє фото">&#8249;</button>
+    <div class="lb-img-wrap" id="lbWrap"><img id="lbImg" alt=""></div>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Наступне фото">&#8250;</button>
+    <p class="lb-count" id="lbCount"></p>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>

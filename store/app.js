@@ -252,6 +252,13 @@ const el = {
   ppFeats: document.getElementById('ppFeats'),
   styleBlock: document.getElementById('styleBlock'),
   styleGrid: document.getElementById('styleGrid'),
+  lightbox: document.getElementById('lightbox'),
+  lbWrap: document.getElementById('lbWrap'),
+  lbImg: document.getElementById('lbImg'),
+  lbClose: document.getElementById('lbClose'),
+  lbPrev: document.getElementById('lbPrev'),
+  lbNext: document.getElementById('lbNext'),
+  lbCount: document.getElementById('lbCount'),
   relatedBlock: document.getElementById('relatedBlock'),
   relatedGrid: document.getElementById('relatedGrid'),
   recentBlock: document.getElementById('recentBlock'),
@@ -578,11 +585,12 @@ function showProduct(handle) {
   el.ppPrice.innerHTML = priceHTML(p);
 
   // Галерея: всі фото товару
-  el.ppImg.src = imgURL(p.imgs[0], 1600);
+  ppIndex = 0;
+  el.ppImg.src = imgURL(p.imgs[0], 1200);
   el.ppImg.alt = p.title;
   el.ppThumbs.innerHTML = p.imgs.length > 1 ? p.imgs.map(function (name, i) {
     return '<button class="modal-thumb' + (i === 0 ? ' active' : '') +
-      '" data-src="' + esc(imgURL(name, 1600)) + '">' +
+      '" data-src="' + esc(imgURL(name, 1200)) + '" data-i="' + i + '">' +
       '<img src="' + esc(imgURL(name, 200)) + '" alt="" loading="lazy"></button>';
   }).join('') : '';
 
@@ -770,10 +778,68 @@ el.ppSizes.addEventListener('click', function (e) {
 el.ppThumbs.addEventListener('click', function (e) {
   const thumb = e.target.closest('.modal-thumb');
   if (!thumb) return;
+  ppIndex = Number(thumb.dataset.i) || 0;
   el.ppImg.src = thumb.dataset.src;
   el.ppThumbs.querySelectorAll('.modal-thumb').forEach(function (t) {
     t.classList.toggle('active', t === thumb);
   });
+});
+
+/* ---------- Lightbox (перегляд і зум фото) ---------- */
+
+let ppIndex = 0;
+let lbIndex = 0;
+
+function lbShow() {
+  const imgs = currentProduct ? currentProduct.imgs : [];
+  if (!imgs.length) return;
+  lbIndex = (lbIndex + imgs.length) % imgs.length;
+  el.lbImg.src = imgURL(imgs[lbIndex], 2000);
+  el.lbImg.classList.remove('zoomed');
+  el.lbImg.style.transformOrigin = '';
+  el.lbCount.textContent = (lbIndex + 1) + ' / ' + imgs.length;
+  const many = imgs.length > 1;
+  el.lbPrev.hidden = !many;
+  el.lbNext.hidden = !many;
+  el.lbCount.hidden = !many;
+}
+function openLightbox(i) {
+  lbIndex = i || 0;
+  el.lightbox.hidden = false;
+  document.body.classList.add('modal-open');
+  lbShow();
+}
+function closeLightbox() {
+  el.lightbox.hidden = true;
+  document.body.classList.remove('modal-open');
+}
+
+el.ppImg.addEventListener('click', function () { openLightbox(ppIndex); });
+el.lbClose.addEventListener('click', closeLightbox);
+el.lbPrev.addEventListener('click', function () { lbIndex--; lbShow(); });
+el.lbNext.addEventListener('click', function () { lbIndex++; lbShow(); });
+el.lbWrap.addEventListener('click', function (e) {
+  if (e.target === el.lbWrap) closeLightbox();   // клік повз фото — закрити
+});
+el.lightbox.addEventListener('click', function (e) {
+  if (e.target === el.lightbox) closeLightbox();
+});
+// клік по фото — зум у точку кліку, повторний — назад
+el.lbImg.addEventListener('click', function (e) {
+  const zoomed = el.lbImg.classList.toggle('zoomed');
+  if (zoomed) {
+    const r = el.lbImg.getBoundingClientRect();
+    el.lbImg.style.transformOrigin =
+      ((e.clientX - r.left) / r.width * 100) + '% ' +
+      ((e.clientY - r.top) / r.height * 100) + '%';
+  } else {
+    el.lbImg.style.transformOrigin = '';
+  }
+});
+document.addEventListener('keydown', function (e) {
+  if (el.lightbox.hidden) return;
+  if (e.key === 'ArrowLeft') { lbIndex--; lbShow(); }
+  if (e.key === 'ArrowRight') { lbIndex++; lbShow(); }
 });
 
 el.ppCrumbs.addEventListener('click', function (e) {
@@ -805,7 +871,8 @@ el.ppCopy.addEventListener('click', function () {
 
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
-    if (document.body.classList.contains('filters-open')) closeFiltersPanel();
+    if (!el.lightbox.hidden) closeLightbox();
+    else if (document.body.classList.contains('filters-open')) closeFiltersPanel();
     else if (currentProduct) location.hash = '';
   }
 });
