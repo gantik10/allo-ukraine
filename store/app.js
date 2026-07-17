@@ -9,6 +9,13 @@ const PAGE_SIZE = 24;               // cards per "Показати ще" chunk
 
 let CDN_BASE = '';                  // з products.json (cdnBase)
 
+// HTML-сутності з фіда Shopify → звичайний текст (далі все одно проходить esc())
+function deent(s) {
+  return String(s || '')
+    .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ');
+}
+
 // Ім'я файла з products.json → повний URL потрібної ширини (Shopify image CDN)
 function imgURL(name, w) {
   if (!name) return '';
@@ -842,6 +849,8 @@ fetch('products.json')
         p.compareUSD = p.compareUSD != null ? parseFloat(p.compareUSD) || null : null;
         p.uah = uah(p.priceUSD);
         p.sale = !!(p.compareUSD && p.compareUSD > p.priceUSD);
+        p.desc = deent(p.desc);
+        p.feats = (p.feats || []).map(deent);
         p.imgs = p.imgs || (p.img ? [p.img] : []);          // сумісність зі старим форматом
         p.img = imgURL(p.imgs[0], 800);
         p.img2 = p.imgs[1] ? imgURL(p.imgs[1], 800) : null;
