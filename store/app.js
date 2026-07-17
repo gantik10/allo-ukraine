@@ -245,7 +245,6 @@ const el = {
   ppSizeHint: document.getElementById('ppSizeHint'),
   ppColorBlock: document.getElementById('ppColorBlock'),
   ppColorName: document.getElementById('ppColorName'),
-  ppSwatches: document.getElementById('ppSwatches'),
   ppCta: document.getElementById('ppCta'),
   ppCopy: document.getElementById('ppCopy'),
   ppDescBlock: document.getElementById('ppDescBlock'),
@@ -547,16 +546,6 @@ function styleFor(p, limit) {
   return out;
 }
 
-function colorSiblings(p) {
-  const seen = {};
-  return PRODUCTS.filter(function (x) {
-    if (x.model !== p.model || x.gender !== p.gender || x.handle === p.handle) return false;
-    if (seen[x.handle]) return false;
-    seen[x.handle] = true;
-    return true;
-  }).slice(0, 11);
-}
-
 function relatedFor(p, limit) {
   const sameSub = [];
   const sameCat = [];
@@ -597,15 +586,10 @@ function showProduct(handle) {
       '<img src="' + esc(imgURL(name, 200)) + '" alt="" loading="lazy"></button>';
   }).join('') : '';
 
-  // Кольори цієї моделі (інші товари-кольорові варіанти)
-  const siblings = colorSiblings(p);
-  el.ppColorBlock.hidden = !(p.colors || []).length && !siblings.length;
+  // Колір поточного товару (свотчі інших кольорів вимкнено: у публічному фіді
+  // Alo немає надійної звʼязки моделей за кольорами)
+  el.ppColorBlock.hidden = !(p.colors || []).length;
   el.ppColorName.textContent = (p.colors && p.colors[0]) || '';
-  el.ppSwatches.innerHTML = [p].concat(siblings).map(function (x) {
-    return '<button class="pp-swatch' + (x.handle === p.handle ? ' active' : '') +
-      '" data-handle="' + esc(x.handle) + '" title="' + esc((x.colors && x.colors[0]) || x.title) + '">' +
-      '<img src="' + esc(imgURL(x.imgs[0], 120)) + '" alt="" loading="lazy"></button>';
-  }).join('');
 
   // Розміри з наявністю (перекреслені = немає на складі бренду)
   const sizesA = p.sizesA || [];
@@ -764,9 +748,9 @@ el.filtersClose.addEventListener('click', closeFiltersPanel);
 el.filtersApply.addEventListener('click', closeFiltersPanel);
 el.filtersBackdrop.addEventListener('click', closeFiltersPanel);
 
-// any product card (catalog, related, style, recent) or color swatch → its page
+// any product card (catalog, related, style, recent) → its page
 document.addEventListener('click', function (e) {
-  const node = e.target.closest('.card[data-handle], .pp-swatch[data-handle]');
+  const node = e.target.closest('.card[data-handle]');
   if (!node) return;
   const p = findByHandle(node.dataset.handle);
   if (p && (!currentProduct || p.handle !== currentProduct.handle)) location.hash = productHash(p);
