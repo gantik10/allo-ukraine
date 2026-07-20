@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>ALO UKRAINE · Instagram Planner</title>
+  <script>document.write('<link rel="stylesheet" href="styles.css?ts=' + Date.now() + '">');</script>
+  <noscript><link rel="stylesheet" href="styles.css" /></noscript>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231a1a1a'/%3E%3Ctext y='62' x='50' text-anchor='middle' font-size='30' font-family='serif' fill='white'%3EALO%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="avatar">ALO</div>
+      <div class="brand-text">
+        <div class="handle">@alo.ukraine</div>
+        <div class="bio"></div>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <main>
+    <section class="filters">
+      <div class="filter-group">
+        <span class="filter-label">Format:</span>
+        <div class="chips" id="formatChips"></div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Pillar:</span>
+        <div class="chips" id="pillarChips"></div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Status:</span>
+        <div class="chips" id="statusChips"></div>
+      </div>
+      <div class="filter-group">
+        <button class="chip" id="prodChip"></button>
+      </div>
+      <button class="view-toggle" id="newPostBtn">+ New post</button>
+      <button class="view-toggle" id="aiSettingsBtn" title="ChatGPT caption generator settings">✨ AI</button>
+      <button class="view-toggle" id="generateAllBtn" title="ChatGPT writes captions for all posts">✨ Generate all</button>
+      <button class="view-toggle" id="resetOrderBtn" title="Reset to original order">↺ Order</button>
+      <button class="view-toggle" id="exportBtn" title="Download all your posts/edits as a file">↥ Export</button>
+      <label class="view-toggle" id="importBtn" title="Load posts/edits from a file">↧ Import<input type="file" accept="application/json,.json" hidden /></label>
+      <button class="view-toggle" id="viewToggle">List view</button>
+    </section>
+
+    <section id="gridView" class="ig-grid"></section>
+    <section id="listView" class="ig-list hidden"></section>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">×</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="picker" id="picker">
+    <div class="picker-backdrop"></div>
+    <div class="picker-card">
+      <div class="picker-head">
+        <h3>Choose an image</h3>
+        <button class="picker-close" id="pickerClose">×</button>
+      </div>
+      <div id="pickerBody"></div>
+    </div>
+  </div>
+
+  <div class="modal editor" id="editor">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card editor-card">
+      <button class="modal-close" id="editorClose">×</button>
+      <div class="editor-body" id="editorBody"></div>
+    </div>
+  </div>
+
+  <div class="modal editor" id="aiModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card editor-card">
+      <button class="modal-close" id="aiModalClose">×</button>
+      <div class="editor-body" id="aiModalBody"></div>
+    </div>
+  </div>
+
+  <footer class="footnote">
+    <span>ALO UKRAINE · Reselling Alo Yoga · Launch plan</span>
+    <span>Drag posts to reorder · <span id="syncStatus">Saved on this device only</span></span>
+  </footer>
+
+  <script>document.write('<scr' + 'ipt src="app.js?ts=' + Date.now() + '"><\/scr' + 'ipt>');</script>
+</body>
+</html>

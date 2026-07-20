@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALO UKRAINE — оригінальний Alo Yoga в Україні</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="announce">Онлайн-оплата з&rsquo;явиться незабаром &middot; Зараз замовлення приймаємо в Instagram Direct</div>
+
+  <header class="site-header">
+    <a class="wordmark" href="#">ALO&nbsp;UKRAINE</a>
+    <div class="search-wrap">
+      <input id="search" class="search" type="search" placeholder="Пошук по каталогу" aria-label="Пошук по каталогу" autocomplete="off">
+    </div>
+    <a class="header-link ig-href" href="#" target="_blank" rel="noopener">Instagram</a>
+  </header>
+
+  <section class="hero">
+    <h1>Alo Yoga. Тепер в&nbsp;Україні.</h1>
+    <p class="hero-sub">Оригінальні речі бренду, у якому живе Голлівуд. В наявності та під замовлення.</p>
+    <a class="btn-primary ig-href" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
+  </section>
+
+  <nav class="toolbar" aria-label="Фільтри каталогу">
+    <div class="chips" id="chips"></div>
+    <div class="sort-wrap">
+      <label class="sort-label" for="sort">Сортування</label>
+      <select id="sort" class="sort">
+        <option value="default">За новизною (як є)</option>
+        <option value="asc">Ціна &#8593;</option>
+        <option value="desc">Ціна &#8595;</option>
+        <option value="sale">Спершу зі знижкою</option>
+      </select>
+    </div>
+  </nav>
+
+  <main class="catalog">
+    <div class="catalog-top">
+      <p class="result-count" id="resultCount">Завантаження каталогу&hellip;</p>
+      <button id="filtersToggle" class="btn-outline filters-toggle">Фільтри</button>
+    </div>
+    <div class="catalog-layout">
+      <aside class="filters" id="filters" aria-label="Фільтри товарів">
+        <div class="filters-head">
+          <span class="filters-title">Фільтри</span>
+          <button id="filtersReset" class="filters-reset" hidden>Скинути все</button>
+          <button id="filtersClose" class="filters-close" aria-label="Закрити фільтри">&times;</button>
+        </div>
+        <div id="filterGroups"></div>
+        <button id="filtersApply" class="btn-primary filters-apply">Показати товари</button>
+      </aside>
+      <div class="catalog-main">
+        <div class="applied" id="applied" hidden></div>
+        <div class="grid" id="grid"></div>
+        <div class="empty" id="empty" hidden>
+          <p class="empty-title">Нічого не знайдено</p>
+          <p class="empty-sub">Спробуйте змінити запит, зняти фільтри або обрати іншу категорію.</p>
+        </div>
+        <div class="more-wrap">
+          <button id="more" class="btn-outline" hidden>Показати ще</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="filters-backdrop" id="filtersBackdrop" hidden></div>
+
+  <section class="product-page" id="productPage" hidden>
+    <nav class="pp-crumbs" id="ppCrumbs" aria-label="Хлібні крихти"></nav>
+    <div class="pp-layout">
+      <div class="pp-gallery">
+        <div class="pp-img-wrap"><img id="ppImg" alt=""></div>
+        <div class="pp-thumbs" id="ppThumbs"></div>
+      </div>
+      <div class="pp-info">
+        <p class="pp-cat" id="ppCat"></p>
+        <h1 class="pp-title" id="ppTitle"></h1>
+        <p class="pp-price" id="ppPrice"></p>
+        <div class="pp-colorblock" id="ppColorBlock" hidden>
+          <p class="pp-label">Колір: <span class="pp-color-name" id="ppColorName"></span></p>
+        </div>
+        <div class="pp-sizes" id="ppSizesBlock" hidden>
+          <p class="pp-label">Розмір <span class="pp-size-hint" id="ppSizeHint"></span></p>
+          <div class="size-chips" id="ppSizes"></div>
+          <p class="pp-size-note">Закреслений розмір — зараз немає на складі бренду, уточніть у Direct.</p>
+        </div>
+        <a class="btn-primary pp-cta ig-href" id="ppCta" href="#" target="_blank" rel="noopener">Замовити в Direct</a>
+        <button class="btn-outline pp-copy" id="ppCopy">Скопіювати запит для Direct</button>
+        <p class="pp-hint" id="ppHint">Напишіть нам модель і розмір — відповімо за кілька хвилин. Онлайн-оплата скоро.</p>
+        <ul class="pp-perks">
+          <li>Оригінал зі США 🇺🇸</li>
+          <li>Нова пошта по всій Україні</li>
+          <li>В наявності або під замовлення 10–20 днів</li>
+        </ul>
+        <div class="pp-accs">
+          <details class="pp-acc" id="ppDescBlock" open>
+            <summary>Опис і деталі</summary>
+            <div class="pp-acc-body">
+              <p class="pp-desc" id="ppDesc"></p>
+              <ul class="pp-feats" id="ppFeats"></ul>
+            </div>
+          </details>
+          <details class="pp-acc">
+            <summary>Доставка і оплата</summary>
+            <div class="pp-acc-body">
+              <p>Нова пошта по всій Україні. Речі в наявності відправляємо за 1–2 дні, під замовлення — 10–20 днів. Оплата: передоплата на рахунок ФОП / картку або накладений платіж із передоплатою 200 грн.</p>
+            </div>
+          </details>
+          <details class="pp-acc">
+            <summary>Оригінальність</summary>
+            <div class="pp-acc-body">
+              <p>Кожна річ — з фірмовим пакуванням, бирками та чеком. Перед відправкою надішлемо фото саме вашої речі в Direct.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+    <section class="pp-related" id="styleBlock" hidden>
+      <h2 class="pp-h2">Доповнити образ</h2>
+      <div class="grid" id="styleGrid"></div>
+    </section>
+    <section class="pp-related" id="relatedBlock" hidden>
+      <h2 class="pp-h2">Вам може сподобатися</h2>
+      <div class="grid" id="relatedGrid"></div>
+    </section>
+    <section class="pp-related" id="recentBlock" hidden>
+      <h2 class="pp-h2">Ви нещодавно дивились</h2>
+      <div class="grid" id="recentGrid"></div>
+    </section>
+  </section>
+
+  <footer class="site-footer">
+    <p class="footer-brand">ALO UKRAINE</p>
+    <p class="footer-note">ALO UKRAINE — незалежний магазин. Не є офіційним представництвом Alo Yoga.</p>
+    <p class="footer-links"><a class="ig-href" href="#" target="_blank" rel="noopener">Instagram</a></p>
+    <p class="footer-updated" id="updatedAt"></p>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Перегляд фото">
+    <button class="lb-close" id="lbClose" aria-label="Закрити">&times;</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Попереднє фото">&#8249;</button>
+    <div class="lb-img-wrap" id="lbWrap"><img id="lbImg" alt=""></div>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Наступне фото">&#8250;</button>
+    <p class="lb-count" id="lbCount"></p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

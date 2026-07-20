@@ -1,0 +1,405 @@
+{
+  "meta": {
+    "brand": "ALO UKRAINE",
+    "handle": "@alo.ukraine",
+    "currency": "UAH",
+    "fxRate": 44.8,
+    "generatedAt": "2026-07-16",
+    "version": "v3",
+    "voice": "Спокійний преміум у дусі @alo. Тексти можна переписувати ChatGPT (✨ Generate) — брифи в aiBrief.",
+    "note": "30 стартових постів (pl1–pl30) ГОТОВІ до ручного постингу: реальні фото з каталогу Alo вже лежать у images/, підписи написані, ціни пораховані (US retail × 44.8 × 1.45). Порядок pl1–pl9 = стартова сітка 3×3 (постити у зворотному порядку: спершу pl9, останнім pl1). Фаза «Після старту» — 5 постів, яким ще потрібні медіа/графіка. Дати не проставлені — автопостер ці пости не чіпає.",
+    "aiStylePrompt": "Позиціонування: ми — магазин Alo Yoga в Україні, відкриваємо українцям бренд, який ще ніхто тут не продає. МИ НЕ ресейлери і ніколи так себе не називаємо: жодних згадок про викуп, посередництво, склади чи пересилку. Походження можна згадувати лише як «оригінал зі США» — без деталей логістики. Просто: «в наявності» або «під замовлення 10–20 днів». Замовлення — через Direct.\nТон: спокійний преміум, як у @alo — мінімалізм, впевненість, тепло, без крику та знижкового тиску. Мова: українська, без русизмів; слово «Direct» — латиницею.\nДовжина: 2–5 коротких рядків, кожна думка з нового рядка, між блоками — порожній рядок.\nЕмодзі: максимум 1–2 на пост (🤍 ✨ 🇺🇦), і не в кожному пості.\nЦіна: якщо в завданні є ціна — ОБОВ'ЯЗКОВО вказати її в пості у форматі «X XXX грн». Ніколи не писати «ціна в Direct» — це вбиває довіру (~70% людей гортають далі). Завжди зазначати наявність: «в наявності» або «під замовлення 10–20 днів». Використовувати ВСІ факти із завдання, нічого не вигадувати.\nCTA в кінці майже кожного поста: «Пишіть у Direct» / «Розмір у Direct».\nЗаборонено: обіцяти офіційне представництво Alo, називати селебріті «амбасадорами» без факту, КАПС, подвійні емодзі-дужки (✅…✅), 🔥, «АКЦІЯ», знаки оклику пачками, канцелярит."
+  },
+  "phases": [
+    { "id": "grid", "label": "Стартова сітка 3×3", "color": "#1a1a1a" },
+    { "id": "feed", "label": "Стрічка · до старту", "color": "#5E4F3D" },
+    { "id": "later", "label": "Після старту · потрібні медіа", "color": "#9B8B7A" }
+  ],
+  "pillars": {
+    "product": { "label": "Product Hero", "color": "#8B7355" },
+    "sets": { "label": "Head-to-Toe", "color": "#9B8B7A" },
+    "celebrity": { "label": "Celebrity", "color": "#C56F87" },
+    "trust": { "label": "Trust & How-to", "color": "#7A8B9C" },
+    "lifestyle": { "label": "Wellness", "color": "#E0AF6F" },
+    "drop": { "label": "Drops & Stock", "color": "#1a1a1a" }
+  },
+  "posts": [
+    {
+      "id": "pl1", "order": 1, "phase": "grid", "day": "1/30", "format": "carousel", "pillar": "product",
+      "title": "Airlift Black — легінси-легенда",
+      "product": "High-Waist Airlift Legging / 7/8 — Black",
+      "priceUAH": 8750,
+      "productionRequired": false,
+      "aiBrief": "Хіро-пост головного продукту Alo: легінси Airlift у чорному, повна довжина та 7/8. Компресія, посадка «як рукавичка». 8 750 грн, під замовлення 10–20 днів. CTA у Direct.",
+      "caption": "Airlift. Легінси, з яких почався культ Alo.\n\nКомпресія, що тримає, і посадка «як рукавичка». Повна довжина або 7/8 — обидві в чорному.\n\n8 750 грн · під замовлення 10–20 днів\nНаявність і розмір — у Direct",
+      "hashtags": ["#aloyoga", "#airlift", "#aloukraine", "#легінси", "#спортивнийодяг"],
+      "slides": [ { "image": "pl1-1.jpg" }, { "image": "pl1-2.jpg" }, { "image": "pl1-3.jpg" } ]
+    },
+    {
+      "id": "pl2", "order": 2, "phase": "grid", "day": "2/30", "format": "carousel", "pillar": "product",
+      "title": "Airlift Intrigue Bra",
+      "product": "Airlift Intrigue Bra — Black / Espresso",
+      "priceUAH": 5100,
+      "productionRequired": false,
+      "aiBrief": "Бра Airlift Intrigue: перехресні шлейки на спині, підтримка на тренування і на щодень. Кольори Black та Espresso. 5 100 грн, під замовлення 10–20 днів. CTA у Direct.",
+      "caption": "Airlift Intrigue. Бра, з якого починається будь-який сет Alo.\n\nПерехресні шлейки на спині, підтримка на тренування і на каву після. Чорний та Espresso.\n\n5 100 грн · під замовлення 10–20 днів\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#alobra", "#aloukraine", "#airlift", "#спортивнийтоп"],
+      "slides": [ { "image": "pl2-1.jpg" }, { "image": "pl2-2.jpg" }, { "image": "pl2-3.jpg" } ]
+    },
+    {
+      "id": "pl3", "order": 3, "phase": "grid", "day": "3/30", "format": "carousel", "pillar": "sets",
+      "title": "Accolade — костюм селебріті",
+      "product": "Accolade Sweatpant + Cropped Accolade Crewneck",
+      "priceUAH": 16900,
+      "productionRequired": false,
+      "aiBrief": "Костюм Accolade — «той самий» з аеропортних фото селебріті: джогери 9 000 грн + світшот 8 350 грн, сетом 16 900 грн. Французька махра, oversize. Під замовлення 10–20 днів. CTA: розміри в Direct.",
+      "caption": "Accolade. Той самий костюм з аеропортних фото селебріті.\n\nСвітшот oversize + джогери з французької махри.\n\nДжогери 9 000 грн · світшот 8 350 грн · сетом — 16 900 грн\nРозміри в Direct",
+      "hashtags": ["#aloyoga", "#accolade", "#aloukraine", "#костюм", "#спортивнийстиль"],
+      "slides": [ { "image": "pl3-1.jpg" }, { "image": "pl3-2.jpg" }, { "image": "pl3-3.jpg" } ]
+    },
+    {
+      "id": "pl4", "order": 4, "phase": "grid", "day": "4/30", "format": "carousel", "pillar": "product",
+      "title": "Match Point Skirt",
+      "product": "Match Point Tennis Skirt — Black / White",
+      "priceUAH": 5100,
+      "productionRequired": false,
+      "aiBrief": "Тенісна спідниця Match Point — герой тренду tenniscore: плісе, вшиті шорти, кишеня для м'яча. Чорна або біла. 5 100 грн, під замовлення 10–20 днів. CTA: розмір у Direct.",
+      "caption": "Tenniscore — головний тренд літа.\n\nСпідниця Match Point: плісе, вшиті шорти, кишеня для м'яча. Чорна або біла.\n\n5 100 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#matchpoint", "#tenniscore", "#aloukraine", "#спідниця"],
+      "slides": [ { "image": "pl4-1.jpg" }, { "image": "pl4-2.jpg" }, { "image": "pl4-3.jpg" } ]
+    },
+    {
+      "id": "pl5", "order": 5, "phase": "grid", "day": "5/30", "format": "carousel", "pillar": "product",
+      "title": "Sunset Mule — вірусні м'юли",
+      "product": "ALO Sunset Sneaker Mule — Gravel / Black",
+      "priceUAH": 14650,
+      "productionRequired": false,
+      "aiBrief": "Sunset Sneaker Mule — взуття, що стало вірусним у TikTok цього року. Взувається за секунду. Кольори Gravel і Black розбирають найшвидше. 14 650 грн, під замовлення 10–20 днів. Легка терміновість без тиску.",
+      "caption": "Sunset Mule. Взуття, яке розірвало TikTok цього року.\n\nВзувається за секунду, носиться цілий день. Gravel і чорний зникають найшвидше.\n\n14 650 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#sunsetmule", "#aloukraine", "#мюли", "#взуття"],
+      "slides": [ { "image": "pl5-1.jpg" }, { "image": "pl5-2.jpg" }, { "image": "pl5-3.jpg" } ]
+    },
+    {
+      "id": "pl6", "order": 6, "phase": "grid", "day": "6/30", "format": "carousel", "pillar": "product",
+      "title": "Courtside Tennis Dress",
+      "product": "Alosoft Courtside Tennis Dress — Black / White",
+      "priceUAH": 5350,
+      "productionRequired": false,
+      "aiBrief": "Тенісна сукня Alosoft Courtside: тканина-«масло», вбудований бра, шорти всередині — готовий образ одним рухом. Чорна або біла. 5 350 грн, під замовлення 10–20 днів.",
+      "caption": "Alosoft Courtside. Тенісна сукня з тканини-«масла».\n\nВбудований бра, шорти всередині — один рух, і образ готовий. Чорна або біла.\n\n5 350 грн · під замовлення 10–20 днів\nПишіть у Direct 🤍",
+      "hashtags": ["#aloyoga", "#alosoft", "#aloukraine", "#тенісна_сукня", "#tenniscore"],
+      "slides": [ { "image": "pl6-1.jpg" }, { "image": "pl6-2.jpg" }, { "image": "pl6-3.jpg" } ]
+    },
+    {
+      "id": "pl7", "order": 7, "phase": "grid", "day": "7/30", "format": "carousel", "pillar": "product",
+      "title": "Recovery Mode Sneaker",
+      "product": "ALO Recovery Mode Sneaker — Natural White / Clay",
+      "priceUAH": 12700,
+      "productionRequired": false,
+      "aiBrief": "Перші кросівки Alo — Recovery Mode: піна з високим поверненням енергії, «відновлення для ніг» після тренування. Кольори Natural White і Clay. 12 700 грн, під замовлення 10–20 днів. CTA: розмір у Direct.",
+      "caption": "Recovery Mode. Перші кросівки Alo.\n\nПіна, що повертає ноги до життя після тренування. Natural White і Clay.\n\n12 700 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#alosneakers", "#recoverymode", "#aloukraine", "#кросівки"],
+      "slides": [ { "image": "pl7-1.jpg" }, { "image": "pl7-2.jpg" }, { "image": "pl7-3.jpg" } ]
+    },
+    {
+      "id": "pl8", "order": 8, "phase": "grid", "day": "8/30", "format": "carousel", "pillar": "lifestyle",
+      "title": "Warrior Mat",
+      "product": "Warrior Mat — Gravel / Lightweight Black",
+      "priceUAH": 9650,
+      "productionRequired": false,
+      "aiBrief": "Warrior Mat — культовий йога-мат Alo: щільний, широкий, не ковзає. Warrior 9 650 грн, Lightweight 8 350 грн. Під замовлення 10–20 днів. Тон wellness.",
+      "caption": "Warrior Mat. Йога-мат, з якого починаються ранки половини велнес-блогерок світу.\n\nЩільний, широкий, не ковзає навіть на гарячій йозі.\n\nWarrior 9 650 грн · Lightweight 8 350 грн\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#warriormat", "#aloukraine", "#йога", "#wellness"],
+      "slides": [ { "image": "pl8-1.jpg" }, { "image": "pl8-2.jpg" }, { "image": "pl8-3.jpg" } ]
+    },
+    {
+      "id": "pl9", "order": 9, "phase": "grid", "day": "9/30", "format": "carousel", "pillar": "lifestyle",
+      "title": "Glow System — б'юті Alo",
+      "product": "Head-To-Toe Glow Oil · Magic Multi-Balm · Lasting Lip Balm",
+      "priceUAH": 3150,
+      "productionRequired": false,
+      "aiBrief": "Б'юті-лінія Alo Glow System: олія для тіла Head-To-Toe Glow Oil 3 150 грн, бальзам Magic Multi-Balm 3 150 грн, бальзам для губ 800 грн. Ідеальний додаток до замовлення. Тон wellness, 1 емодзі ✨.",
+      "caption": "Alo — це вже не лише одяг. Glow System:\n\nолія для тіла Head-To-Toe · бальзам Magic Multi-Balm · бальзам для губ.\n\nВід 800 до 3 150 грн — ідеальний додаток до замовлення\nПишіть у Direct ✨",
+      "hashtags": ["#aloyoga", "#aloglow", "#aloukraine", "#бюті", "#wellness"],
+      "slides": [ { "image": "pl9-1.jpg" }, { "image": "pl9-2.jpg" }, { "image": "pl9-3.jpg" } ]
+    },
+    {
+      "id": "pl10", "order": 10, "phase": "feed", "day": "10/30", "format": "carousel", "pillar": "drop",
+      "title": "Airlift — нові кольори",
+      "product": "7/8 Airlift — Candy Red / Winter Ivy / Steel Grey",
+      "priceUAH": 6050,
+      "productionRequired": false,
+      "aiBrief": "Кольорові Airlift 7/8: Candy Red 7 000 грн, Winter Ivy і Steel Grey по 6 050 грн. Та сама компресія — новий настрій. Під замовлення 10–20 днів. CTA: колір і розмір у Direct.",
+      "caption": "Airlift 7/8 у кольорах: Candy Red, Winter Ivy, Steel Grey.\n\nТа сама компресія — новий настрій.\n\nВід 6 050 грн · під замовлення 10–20 днів\nКолір і розмір — у Direct",
+      "hashtags": ["#aloyoga", "#airlift", "#aloukraine", "#легінси", "#новікольори"],
+      "slides": [ { "image": "pl10-1.jpg" }, { "image": "pl10-2.jpg" }, { "image": "pl10-3.jpg" } ]
+    },
+    {
+      "id": "pl11", "order": 11, "phase": "feed", "day": "11/30", "format": "carousel", "pillar": "product",
+      "title": "Airbrush — матовий двійник",
+      "product": "Airbrush Mid-Rise / Low-Rise Legging — Black",
+      "priceUAH": 7700,
+      "productionRequired": false,
+      "aiBrief": "Легінси Airbrush — матова, «бавовняна» альтернатива Airlift: м'якші, тримають силует. Mid-rise або low-rise, чорні. 7 700 грн, під замовлення 10–20 днів.",
+      "caption": "Airbrush. Матовий двійник Airlift.\n\nМ'якший, «бавовняний» на дотик — і так само тримає силует. Mid-rise або low-rise.\n\n7 700 грн · під замовлення 10–20 днів\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#airbrush", "#aloukraine", "#легінси", "#базовийгардероб"],
+      "slides": [ { "image": "pl11-1.jpg" }, { "image": "pl11-2.jpg" }, { "image": "pl11-3.jpg" } ]
+    },
+    {
+      "id": "pl12", "order": 12, "phase": "feed", "day": "12/30", "format": "carousel", "pillar": "product",
+      "title": "Bootcut — кльош повернувся",
+      "product": "Airbrush High-Waist Bootcut Legging — Taupe",
+      "priceUAH": 6650,
+      "productionRequired": false,
+      "aiBrief": "Тренд-пост: легінси-кльош Airbrush Bootcut у кольорі Taupe виглядають як штани. Повна довжина або 7/8. 6 650 грн, під замовлення 10–20 днів.",
+      "caption": "Кльош повернувся.\n\nAirbrush Bootcut у Taupe — легінси, які виглядають як штани. Повна довжина або 7/8.\n\n6 650 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#bootcut", "#aloukraine", "#легінси", "#тренд"],
+      "slides": [ { "image": "pl12-1.jpg" }, { "image": "pl12-2.jpg" }, { "image": "pl12-3.jpg" } ]
+    },
+    {
+      "id": "pl13", "order": 13, "phase": "feed", "day": "13/30", "format": "carousel", "pillar": "product",
+      "title": "Alosoft Highlight",
+      "product": "Alosoft High-Waist 7/8 Highlight Legging — Oatmeal / Grey",
+      "priceUAH": 7050,
+      "productionRequired": false,
+      "aiBrief": "Легінси Alosoft Highlight 7/8 — тканина-«масло» для дому, подорожей і вихідних. Кольори Oatmeal Heather та Athletic Heather Grey. 7 050 грн, під замовлення 10–20 днів.",
+      "caption": "Alosoft. Тканина, яку описують одним словом: «масло».\n\nЛегінси Highlight 7/8 — для дому, подорожей і неділь без планів. Oatmeal або сірий меланж.\n\n7 050 грн · під замовлення 10–20 днів\nПишіть у Direct 🤍",
+      "hashtags": ["#aloyoga", "#alosoft", "#aloukraine", "#lounge", "#затишок"],
+      "slides": [ { "image": "pl13-1.jpg" }, { "image": "pl13-2.jpg" }, { "image": "pl13-3.jpg" } ]
+    },
+    {
+      "id": "pl14", "order": 14, "phase": "feed", "day": "14/30", "format": "carousel", "pillar": "product",
+      "title": "Бра Alosoft",
+      "product": "Alosoft Sincere Bra / Highlight Bra — Black",
+      "priceUAH": 4450,
+      "productionRequired": false,
+      "aiBrief": "Два м'які бра Alosoft на щодень: Sincere 4 450 грн і Highlight 5 100 грн, обидва чорні. Під замовлення 10–20 днів. CTA: розмір у Direct.",
+      "caption": "М'якість, у якій хочеться жити.\n\nБра Alosoft: Sincere — 4 450 грн · Highlight — 5 100 грн. Обидва чорні, обидва на щодень.\n\nПід замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#alosoft", "#alobra", "#aloukraine", "#базовийгардероб"],
+      "slides": [ { "image": "pl14-1.jpg" }, { "image": "pl14-2.jpg" }, { "image": "pl14-3.jpg" } ]
+    },
+    {
+      "id": "pl15", "order": 15, "phase": "feed", "day": "15/30", "format": "carousel", "pillar": "product",
+      "title": "Байкери Alo",
+      "product": "5\" Airbrush / 7\" High-Waist Biker Short — Black",
+      "priceUAH": 5100,
+      "productionRequired": false,
+      "aiBrief": "Байкерські шорти Alo: 5 дюймів Airbrush або 7 дюймів, чорні, висока талія, не задираються на тренуванні. 5 100 грн, під замовлення 10–20 днів.",
+      "caption": "Байкери Alo.\n\n5\" Airbrush або 7\" — чорні, з високою талією, не задираються на тренуванні.\n\n5 100 грн · під замовлення 10–20 днів\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#bikershorts", "#aloukraine", "#шорти", "#тренування"],
+      "slides": [ { "image": "pl15-1.jpg" }, { "image": "pl15-2.jpg" }, { "image": "pl15-3.jpg" } ]
+    },
+    {
+      "id": "pl16", "order": 16, "phase": "feed", "day": "16/30", "format": "carousel", "pillar": "product",
+      "title": "Match Point Short",
+      "product": "Match Point Short — Emerald Isle / Azure Blue",
+      "priceUAH": 5100,
+      "productionRequired": false,
+      "aiBrief": "Тенісні шорти Match Point з плісе, кольори Emerald Isle та Azure Blue. На корт і на місто. 5 100 грн, під замовлення 10–20 днів.",
+      "caption": "Match Point Short. Тенісні шорти з плісе.\n\nEmerald Isle та Azure Blue — на корт і на місто.\n\n5 100 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#matchpoint", "#tenniscore", "#aloukraine", "#шорти"],
+      "slides": [ { "image": "pl16-1.jpg" }, { "image": "pl16-2.jpg" }, { "image": "pl16-3.jpg" } ]
+    },
+    {
+      "id": "pl17", "order": 17, "phase": "feed", "day": "17/30", "format": "carousel", "pillar": "product",
+      "title": "Game On Tennis Dress",
+      "product": "Micro Plisse Game On Tennis Dress — White / Black",
+      "priceUAH": 7150,
+      "productionRequired": false,
+      "aiBrief": "Тенісна сукня Micro Plisse Game On: мікроплісе, збирає компліменти і поза кортом. Біла або чорна. 7 150 грн, під замовлення 10–20 днів.",
+      "caption": "Micro Plisse Game On.\n\nТенісна сукня з мікроплісе — та, що збирає компліменти навіть поза кортом. Біла або чорна.\n\n7 150 грн · під замовлення 10–20 днів\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#tennisdress", "#aloukraine", "#tenniscore", "#сукня"],
+      "slides": [ { "image": "pl17-1.jpg" }, { "image": "pl17-2.jpg" }, { "image": "pl17-3.jpg" } ]
+    },
+    {
+      "id": "pl18", "order": 18, "phase": "feed", "day": "18/30", "format": "carousel", "pillar": "product",
+      "title": "Bae Hoodie",
+      "product": "Bae Hoodie — Ivory / Black",
+      "priceUAH": 6400,
+      "productionRequired": false,
+      "aiBrief": "Худі Bae: вкорочений крій, щільна махра, хочеться не знімати. Ivory або чорне. 6 400 грн, під замовлення 10–20 днів.",
+      "caption": "Bae Hoodie. Худі, яке хочеться не знімати.\n\nВкорочений крій, щільна махра. Ivory або чорне.\n\n6 400 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#hoodie", "#aloukraine", "#худі", "#casual"],
+      "slides": [ { "image": "pl18-1.jpg" }, { "image": "pl18-2.jpg" }, { "image": "pl18-3.jpg" } ]
+    },
+    {
+      "id": "pl19", "order": 19, "phase": "feed", "day": "19/30", "format": "carousel", "pillar": "drop",
+      "title": "Cropped Accolade — рожеве",
+      "product": "Cropped Accolade Crewneck — Vintage Pink / Candy Heart Pink",
+      "priceUAH": 8350,
+      "productionRequired": false,
+      "aiBrief": "Кольоровий пост: Cropped Accolade Crewneck у Vintage Pink та Candy Heart Pink — колір робить образ. 8 350 грн, під замовлення 10–20 днів.",
+      "caption": "Cropped Accolade у рожевому.\n\nVintage Pink і Candy Heart Pink — випадок, коли колір робить весь образ.\n\n8 350 грн · під замовлення 10–20 днів\nПишіть у Direct 🤍",
+      "hashtags": ["#aloyoga", "#accolade", "#aloukraine", "#світшот", "#рожевий"],
+      "slides": [ { "image": "pl19-1.jpg" }, { "image": "pl19-2.jpg" }, { "image": "pl19-3.jpg" } ]
+    },
+    {
+      "id": "pl20", "order": 20, "phase": "feed", "day": "20/30", "format": "carousel", "pillar": "product",
+      "title": "Accolade Straight Leg",
+      "product": "Accolade Straight Leg Sweatpant — Sun Kissed Brown / White Heather",
+      "priceUAH": 9000,
+      "productionRequired": false,
+      "aiBrief": "Прямі спортивні штани Accolade Straight Leg — носять і з кросівками, і з пальтом. Sun Kissed Brown або White Heather. 9 000 грн, під замовлення 10–20 днів.",
+      "caption": "Accolade Straight Leg.\n\nПрямі спортивні штани, які носять із кросівками й з пальтом. Sun Kissed Brown або White Heather.\n\n9 000 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#accolade", "#aloukraine", "#штани", "#спортивнийстиль"],
+      "slides": [ { "image": "pl20-1.jpg" }, { "image": "pl20-2.jpg" }, { "image": "pl20-3.jpg" } ]
+    },
+    {
+      "id": "pl21", "order": 21, "phase": "feed", "day": "21/30", "format": "carousel", "pillar": "drop",
+      "title": "Gold Rush Vest — до сезону",
+      "product": "Cropped Gold Rush Puffer Vest — Black / Ivory",
+      "priceUAH": 10950,
+      "productionRequired": false,
+      "aiBrief": "Пуфер-жилет Cropped Gold Rush: глянець з осінніх стрітстайлів, чорний або Ivory. Забирати до сезону. 10 950 грн, під замовлення 10–20 днів.",
+      "caption": "Cropped Gold Rush.\n\nГлянцевий пуфер-жилет з усіх осінніх стрітстайлів — чорний або Ivory. Забирайте до сезону.\n\n10 950 грн · під замовлення 10–20 днів\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#goldrush", "#aloukraine", "#пуфер", "#осінь"],
+      "slides": [ { "image": "pl21-1.jpg" }, { "image": "pl21-2.jpg" }, { "image": "pl21-3.jpg" } ]
+    },
+    {
+      "id": "pl22", "order": 22, "phase": "feed", "day": "22/30", "format": "carousel", "pillar": "product",
+      "title": "Foxy Sherpa",
+      "product": "Foxy Sherpa Jacket — Chai Latte / Ivory",
+      "priceUAH": 14850,
+      "productionRequired": false,
+      "aiBrief": "Куртка-«ведмедик» Foxy Sherpa — затишна зима. Кольори Chai Latte та Ivory. 14 850 грн, під замовлення 10–20 днів.",
+      "caption": "Foxy Sherpa. Куртка-«ведмедик», у якій зима стає затишною.\n\nChai Latte та Ivory.\n\n14 850 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#sherpa", "#aloukraine", "#куртка", "#зима"],
+      "slides": [ { "image": "pl22-1.jpg" }, { "image": "pl22-2.jpg" }, { "image": "pl22-3.jpg" } ]
+    },
+    {
+      "id": "pl23", "order": 23, "phase": "feed", "day": "23/30", "format": "carousel", "pillar": "product",
+      "title": "Пуфери сезону",
+      "product": "Urbanite Wrap Puffer — Black · Glacier Puffer — Winter Ivy",
+      "priceUAH": 10300,
+      "productionRequired": false,
+      "aiBrief": "Два пуфери сезону: Urbanite Wrap чорний 10 300 грн і Glacier у Winter Ivy 13 100 грн. Легкі й теплі. Під замовлення 10–20 днів.",
+      "caption": "Пуфери сезону.\n\nUrbanite Wrap у чорному — 10 300 грн · Glacier у Winter Ivy — 13 100 грн.\nОбидва легкі, обидва гріють по-справжньому.\n\nПід замовлення 10–20 днів · Пишіть у Direct",
+      "hashtags": ["#aloyoga", "#puffer", "#aloukraine", "#пуфер", "#верхнійодяг"],
+      "slides": [ { "image": "pl23-1.jpg" }, { "image": "pl23-2.jpg" }, { "image": "pl23-3.jpg" } ]
+    },
+    {
+      "id": "pl24", "order": 24, "phase": "feed", "day": "24/30", "format": "carousel", "pillar": "product",
+      "title": "Ballet Mule — люкс-лінія",
+      "product": "ALO Ballet Mule — Black",
+      "priceUAH": 24400,
+      "productionRequired": false,
+      "aiBrief": "Шкіряні м'юли ALO Ballet Mule з нової взуттєвої лінії — тихий люкс. 24 400 грн, під замовлення 10–20 днів. Стриманий тон.",
+      "caption": "ALO Ballet Mule.\n\nШкіряні м'юли з нової взуттєвої лінії — мінімалізм, який каже все сам.\n\n24 400 грн · під замовлення 10–20 днів\nРозмір у Direct",
+      "hashtags": ["#aloyoga", "#balletmule", "#aloukraine", "#взуття", "#люкс"],
+      "slides": [ { "image": "pl24-1.jpg" }, { "image": "pl24-2.jpg" } ]
+    },
+    {
+      "id": "pl25", "order": 25, "phase": "feed", "day": "25/30", "format": "carousel", "pillar": "celebrity",
+      "title": "Tranquility Tote — Alo грає в люкс",
+      "product": "ALO Tranquility Tote — Espresso Suede",
+      "priceUAH": 149450,
+      "productionRequired": false,
+      "aiBrief": "Іміджевий пост: Alo офіційно грає на полі люксу — замшева сумка Tranquility Tote ручної роботи, 149 450 грн, під персональне замовлення. Позиція «ми стежимо за кожним дропом бренду». Стриманий тон.",
+      "caption": "Alo вже грає на полі люксу.\n\nTranquility Tote — замша Espresso, ручна робота. 149 450 грн, під персональне замовлення.\n\nДеталі — у Direct",
+      "hashtags": ["#aloyoga", "#aloatelier", "#aloukraine", "#люкс", "#сумка"],
+      "slides": [ { "image": "pl25-1.jpg" }, { "image": "pl25-2.jpg" } ]
+    },
+    {
+      "id": "pl26", "order": 26, "phase": "feed", "day": "26/30", "format": "carousel", "pillar": "lifestyle",
+      "title": "Grip-шкарпетки",
+      "product": "Lettuce Edge Grip Sock — Black · Pulse Grip Sock — Azure Blue",
+      "priceUAH": 2500,
+      "productionRequired": false,
+      "aiBrief": "Grip-шкарпетки Alo для пілатесу, йоги та барре: не ковзають, тримають стопу. Чорні Lettuce Edge або Azure Blue Pulse. 2 500 грн. Маленький чек — гарний додаток до замовлення.",
+      "caption": "Grip-шкарпетки Alo — для пілатесу, йоги та барре.\n\nНе ковзають, тримають стопу. Чорні Lettuce Edge або блакитні Pulse.\n\n2 500 грн · під замовлення 10–20 днів\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#gripsocks", "#aloukraine", "#пілатес", "#йога"],
+      "slides": [ { "image": "pl26-1.jpg" }, { "image": "pl26-2.jpg" } ]
+    },
+    {
+      "id": "pl27", "order": 27, "phase": "feed", "day": "27/30", "format": "carousel", "pillar": "lifestyle",
+      "title": "Дрібниці, які роблять образ",
+      "product": "Alosoft Headband — Black · Glow Wristband 2-Pack",
+      "priceUAH": 2250,
+      "productionRequired": false,
+      "aiBrief": "Аксесуари: пов'язка Alosoft 2 250 грн і напульсники Glow (2 шт.) 2 100 грн. Ідеальний додаток до замовлення. Короткий пост.",
+      "caption": "Дрібниці, які роблять образ.\n\nПов'язка Alosoft — 2 250 грн · напульсники Glow — 2 100 грн.\nІдеальний додаток до замовлення.\n\nПишіть у Direct",
+      "hashtags": ["#aloyoga", "#аксесуари", "#aloukraine", "#headband", "#тренування"],
+      "slides": [ { "image": "pl27-1.jpg" }, { "image": "pl27-2.jpg" } ]
+    },
+    {
+      "id": "pl28", "order": 28, "phase": "feed", "day": "28/30", "format": "carousel", "pillar": "lifestyle",
+      "title": "Вечірній ритуал",
+      "product": "Magnesium Reset Spray · Bath Soak · Glow Oil",
+      "priceUAH": 3150,
+      "productionRequired": false,
+      "aiBrief": "Wellness-пост: вечірній ритуал від Alo — магнієвий спрей, сіль для ванни Mindful Magnesium, олія для тіла Glow Oil, по 3 150 грн. Спокійний тон, 1 емодзі ✨.",
+      "caption": "Вечірній ритуал від Alo.\n\nМагнієвий спрей, сіль для ванни, олія для тіла — по 3 150 грн.\n\nЗібрати набір — у Direct ✨",
+      "hashtags": ["#aloyoga", "#wellness", "#aloukraine", "#бюті", "#ритуал"],
+      "slides": [ { "image": "pl28-1.jpg" }, { "image": "pl28-2.jpg" }, { "image": "pl28-3.jpg" } ]
+    },
+    {
+      "id": "pl29", "order": 29, "phase": "feed", "day": "29/30", "format": "carousel", "pillar": "product",
+      "title": "Alo для чоловіків",
+      "product": "The Triumph Hoodie + Sweatpant — Black",
+      "priceUAH": 10700,
+      "productionRequired": false,
+      "aiBrief": "Чоловіча капсула: худі The Triumph 5 600 грн + джогери 5 100 грн, чорний сет на щодень. Під замовлення 10–20 днів. CTA: розміри в Direct.",
+      "caption": "Alo — це й чоловіче.\n\nThe Triumph: худі 5 600 грн + джогери 5 100 грн. Чорний сет на кожен день.\n\nПід замовлення 10–20 днів\nРозміри в Direct",
+      "hashtags": ["#aloyoga", "#alomen", "#aloukraine", "#чоловіче", "#спортивнийстиль"],
+      "slides": [ { "image": "pl29-1.jpg" }, { "image": "pl29-2.jpg" }, { "image": "pl29-3.jpg" } ]
+    },
+    {
+      "id": "pl30", "order": 30, "phase": "feed", "day": "30/30", "format": "carousel", "pillar": "sets",
+      "title": "Head-to-toe — зберіть свій сет",
+      "product": "Intrigue Bra + Airlift Legging + Accolade Sweatpant",
+      "priceUAH": 21900,
+      "productionRequired": false,
+      "aiBrief": "Фінальний сет-пост: фірмове правило Alo head-to-toe — один колір з голови до ніг. Intrigue Bra 5 100 + Airlift 8 750 + Accolade 9 000 = сетом 21 900 грн замість 22 850. CTA: зібрати свій — у Direct.",
+      "caption": "Head-to-toe — фірмове правило Alo: один колір з голови до ніг.\n\nIntrigue Bra 5 100 · Airlift 8 750 · Accolade 9 000.\n\nСетом — 21 900 грн замість 22 850\nЗібрати свій — у Direct 🤍",
+      "hashtags": ["#aloyoga", "#headtotoe", "#aloukraine", "#сет", "#alostyle"],
+      "slides": [ { "image": "pl30-1.jpg" }, { "image": "pl30-2.jpg" }, { "image": "pl30-3.jpg" } ]
+    },
+    {
+      "id": "p4", "order": 31, "phase": "later", "day": "після старту", "format": "carousel", "pillar": "trust",
+      "title": "Як замовити (закріп)",
+      "productionRequired": true, "productionType": "own graphic",
+      "productionBrief": "Власна графіка, 3 слайди в стилі бренду (крем/коричневий/чорний): 1) Обирайте річ у стрічці або каталозі. 2) Пишіть у Direct — модель, розмір, колір. 3) Нова пошта по всій Україні: в наявності — 1–2 дні, під замовлення — 10–20 днів.",
+      "aiBrief": "Закріплений пост-інструкція «Як замовити». Три кроки: 1) обрати річ у стрічці чи каталозі; 2) написати в Direct модель, розмір і колір; 3) доставка Новою поштою по всій Україні. Терміни: в наявності — 1–2 дні, під замовлення — 10–20 днів. Коротка нумерована інструкція.",
+      "caption": "",
+      "hashtags": ["#aloyoga", "#aloukraine", "#оригінал", "#замовлення", "#новапошта"],
+      "slides": []
+    },
+    {
+      "id": "p5", "order": 32, "phase": "later", "day": "після старту", "format": "static", "pillar": "celebrity",
+      "title": "Кендалл × Luxury Is Wellness",
+      "productionRequired": true, "productionType": "media",
+      "productionBrief": "Кадр з офіційної кампанії «Luxury Is Wellness» з Кендалл Дженнер (@alo, серпень 2025). Обов'язково credit 📷 @alo у підписі.",
+      "aiBrief": "Пост про кампанію Alo «Luxury Is Wellness» з Кендалл Дженнер: філософія бренду — розкіш це велнес. Речі з кампанії можна замовити у нас. Завершити рядком «📷 @alo». Не називати Кендалл амбасадоркою нашого магазину.",
+      "caption": "",
+      "hashtags": ["#aloyoga", "#kendalljenner", "#aloukraine", "#luxuryiswellness", "#alo"]
+    },
+    {
+      "id": "p11", "order": 33, "phase": "later", "day": "після старту", "format": "carousel", "pillar": "celebrity",
+      "title": "Їх не спонсорують",
+      "productionRequired": true, "productionType": "media",
+      "productionBrief": "Карусель з 3–4 пресових папараці-фото: Гейлі Бібер, Джіджі Хадід, Тейлор Свіфт в Alo (street style, не кампанії). Не називати їх амбасадорами — сенс поста в органічності.",
+      "aiBrief": "Пост-соціальний доказ: Гейлі Бібер, Джіджі Хадід, Тейлор Свіфт — папараці регулярно знімають їх в Alo без контрактів. Ключова думка: це не реклама, їм просто зручно і гарно. CTA: зібрати схожий образ — у Direct.",
+      "caption": "",
+      "hashtags": ["#aloyoga", "#streetstyle", "#aloukraine", "#celebritystyle", "#alo"],
+      "slides": []
+    },
+    {
+      "id": "p18", "order": 34, "phase": "later", "day": "після старту", "format": "carousel", "pillar": "trust",
+      "title": "Тільки оригінал",
+      "productionRequired": true, "productionType": "own photo",
+      "productionBrief": "Власні фото: фірмове пакування Alo, бирки, QR-коди на етикетках, чек (великі плани, персональні дані розмиті). Головний конверсійний пост — покупці Alo в Україні бояться підробок.",
+      "aiBrief": "Trust-пост про оригінальність: кожна річ — з фірмовим пакуванням, бирками та чеком; до покупки покажемо все у Direct. Спокійно, без виправдовувань і без згадок про походження/пересилку.",
+      "caption": "",
+      "hashtags": ["#aloyoga", "#оригінал", "#aloukraine", "#якість", "#перевірено"],
+      "slides": []
+    },
+    {
+      "id": "p19", "order": 35, "phase": "later", "day": "після старту", "format": "stories-only", "pillar": "drop",
+      "title": "Опитування: який колір привезти?",
+      "productionRequired": false,
+      "aiBrief": "Текст для Stories-опитування: «Який колір Airlift привезти наступним?» + варіанти Black / Espresso / Ivory / Candy Red. 1–2 рядки, живо.",
+      "caption": "",
+      "hashtags": []
+    }
+  ]
+}
