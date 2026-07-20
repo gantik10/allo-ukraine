@@ -741,6 +741,7 @@ body.modal-open { overflow: hidden; }
   align-items: center;
   justify-content: center;
 }
+.lightbox[hidden] { display: none; }
 .lb-img-wrap {
   width: 100vw;
   height: 100vh;
