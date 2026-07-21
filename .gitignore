@@ -7,6 +7,9 @@ _site/
 autoposter/.env
 autoposter/state.json
 
+# деплой на власний сервер (IP/шляхи — не для публічного репо)
+deploy_server.sh
+
 # внутрішні робочі документи — не для публічного репозиторію
 DIRECT_SALES_PLAYBOOK.md
 TZ_STORE_CLAUDE_DESIGN.md
