@@ -53,7 +53,7 @@ def load_env():
         "IG_USER_ID", "IG_ACCESS_TOKEN", "OPENAI_API_KEY", "OPENAI_MODEL",
         "MEDIA_BASE_URL", "PLAN_YEAR")})
     env.setdefault("MEDIA_BASE_URL",
-                   "https://gantik10.github.io/allo-ukraine/admin/planner/images/")
+                   "https://aloukraine.com/admin/planner/images/")
     env.setdefault("OPENAI_MODEL", "gpt-5-mini")
     env.setdefault("PLAN_YEAR", "2026")
     return env
