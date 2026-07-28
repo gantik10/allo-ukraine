@@ -4,7 +4,7 @@
 
 const FX_RATE = 44.8;               // USD -> UAH
 const MARKUP = 1.45;                // store margin
-const IG_URL = 'https://instagram.com/alo.ukraine';
+const IG_URL = 'https://instagram.com/aloukraine';
 const PAGE_SIZE = 24;               // cards per "Показати ще" chunk
 
 let CDN_BASE = '';                  // з products.json (cdnBase)

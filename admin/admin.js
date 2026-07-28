@@ -4,7 +4,7 @@
 const ADMIN_PIN = 'alo2026';      // косметична завіса; сторінка технічно публічна
 const FX_RATE = 44.8;
 const MARKUP = 1.45;
-const IG_URL = 'https://instagram.com/alo.ukraine';
+const IG_URL = 'https://instagram.com/aloukraine';
 
 function uah(usd) { return Math.ceil((usd * FX_RATE * MARKUP) / 50) * 50; }
 function fmtUAH(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' грн'; }

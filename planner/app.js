@@ -954,7 +954,7 @@
   function captionMessages(info, current) {
     const meta = state.data?.meta || {};
     const sys = 'You are the SMM copywriter for ' + (meta.brand || 'ALO UKRAINE') +
-      ' (' + (meta.handle || '@alo.ukraine') + '), a Ukrainian Instagram shop reselling original Alo Yoga.' +
+      ' (' + (meta.handle || '@aloukraine') + '), a Ukrainian Instagram shop reselling original Alo Yoga.' +
       '\nWrite ONE Instagram caption in Ukrainian following this style guide:\n' + aiStyle() +
       '\nRules: return ONLY the caption text — no hashtags, no surrounding quotes, no explanations.';
     let user = 'Пост:\n— Назва: ' + (info.title || '—') +

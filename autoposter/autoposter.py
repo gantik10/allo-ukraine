@@ -146,7 +146,7 @@ def gen_caption(post, meta, env):
         return None
     style = meta.get("aiStylePrompt", "")
     sys_msg = (f"You are the SMM copywriter for {meta.get('brand', 'ALO UKRAINE')} "
-               f"({meta.get('handle', '@alo.ukraine')}), a Ukrainian Instagram shop for Alo Yoga.\n"
+               f"({meta.get('handle', '@aloukraine')}), a Ukrainian Instagram shop for Alo Yoga.\n"
                f"Write ONE Instagram caption in Ukrainian following this style guide:\n{style}\n"
                "Rules: return ONLY the caption text — no hashtags, no quotes, no explanations.")
     user = f"Пост:\n— Назва: {post.get('title')}\n— Формат: {post.get('format')}"
